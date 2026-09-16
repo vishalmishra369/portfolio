@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal Mishra — Quantitative Researcher &amp; Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#060a12;
+  --bg-1:#0a1120;
+  --bg-2:#0d1626;
+  --line:rgba(148,178,212,0.14);
+  --glass:rgba(150,180,220,0.06);
+  --glass-strong:rgba(160,190,230,0.10);
+  --glass-border:rgba(180,205,235,0.14);
+  --ink-0:#eef3f9;
+  --ink-1:#aab8ce;
+  --ink-2:#748099;
+  --cyan:#5ee1d8;
+  --cyan-soft:rgba(94,225,216,0.16);
+  --amber:#e8b368;
+  --amber-soft:rgba(232,179,104,0.15);
+  --violet:#9c8cf0;
+  --danger:#e8737a;
+  --radius-lg:22px;
+  --radius-md:14px;
+  --radius-sm:9px;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --font-body:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(1200px 700px at 82% -10%, rgba(94,225,216,0.09), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgba(156,140,240,0.08), transparent 55%),
+    linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 45%,var(--bg-2) 100%);
+  color:var(--ink-0);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--cyan-soft);color:var(--ink-0);}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;}
+
+/* ---------- background grid + noise ---------- */
+.grid-field{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 10%, rgba(0,0,0,0.9), transparent 75%);
+  opacity:0.5;
+}
+.field-glow{
+  position:fixed; z-index:0; pointer-events:none; inset:0;
+  background:
+    radial-gradient(600px 300px at 15% 8%, rgba(94,225,216,0.10), transparent 70%),
+    radial-gradient(500px 260px at 90% 18%, rgba(232,179,104,0.08), transparent 70%);
+}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px clamp(20px,6vw,64px);
+  background:rgba(8,13,22,0.55);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:0.01em;
+}
+.brand-mark{
+  width:30px; height:30px; border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(150deg, rgba(94,225,216,0.22), rgba(156,140,240,0.14));
+  border:1px solid var(--glass-border);
+  font-family:var(--font-mono); font-size:12px; color:var(--cyan);
+}
+.nav-links{display:flex; gap:6px; align-items:center;}
+.nav-links a{
+  font-size:13.5px; color:var(--ink-1); padding:8px 14px; border-radius:100px;
+  transition:color .2s ease, background .2s ease;
+}
+.nav-links a:hover{color:var(--ink-0); background:var(--glass);}
+.nav-cta{display:none;}
+@media (min-width:720px){.nav-cta{display:block;}}
+
+/* ---------- glass buttons (iOS-esque) ---------- */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:11px 22px;
+  border-radius:100px;
+  font-family:var(--font-body); font-weight:600; font-size:13.5px;
+  border:1px solid var(--glass-border);
+  background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -8px 16px -8px rgba(0,0,0,0.35),
+    0 6px 20px -8px rgba(0,0,0,0.5);
+  color:var(--ink-0);
+  cursor:pointer; transition:transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .25s ease, border-color .25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(94,225,216,0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -8px 16px -8px rgba(0,0,0,0.35),
+    0 10px 28px -8px rgba(94,225,216,0.25);
+}
+.btn:active{transform:translateY(0px) scale(0.97);}
+.btn-primary{
+  background:linear-gradient(180deg, rgba(94,225,216,0.30), rgba(94,225,216,0.08));
+  border-color:rgba(94,225,216,0.4);
+  color:#eafffb;
+}
+.btn-primary:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), 0 12px 30px -10px rgba(94,225,216,0.45);}
+.btn-ghost{background:rgba(255,255,255,0.02);}
+.btn svg{width:15px; height:15px; opacity:0.85;}
+
+/* ---------- glass surfaces ---------- */
+.glass{
+  background:linear-gradient(155deg, var(--glass-strong), var(--glass));
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(20px) saturate(130%);
+  -webkit-backdrop-filter:blur(20px) saturate(130%);
+  border-radius:var(--radius-lg);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 20px 50px -30px rgba(0,0,0,0.7);
+}
+
+/* ---------- layout shells ---------- */
+main{position:relative; z-index:2;}
+section{
+  padding:96px clamp(20px,6vw,64px);
+  max-width:1220px; margin:0 auto;
+}
+.section-head{
+  display:flex; align-items:baseline; gap:16px; margin-bottom:44px;
+  border-bottom:1px solid var(--line); padding-bottom:20px;
+}
+.section-index{
+  font-family:var(--font-mono); font-size:12px; color:var(--cyan); letter-spacing:0.06em;
+}
+.section-title{
+  font-family:var(--font-display); font-size:clamp(26px,3vw,34px); font-weight:600; letter-spacing:-0.01em;
+}
+.section-sub{
+  font-size:14px; color:var(--ink-2); margin-left:auto; max-width:280px; text-align:right; line-height:1.5;
+}
+@media (max-width:680px){.section-sub{display:none;}}
+
+/* ---------- hero ---------- */
+.hero{padding-top:76px; padding-bottom:60px; position:relative;}
+.hero-grid{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:center;}
+@media (max-width:920px){.hero-grid{grid-template-columns:1fr;}}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:var(--font-mono); font-size:12px; color:var(--ink-1);
+  padding:7px 14px; border-radius:100px;
+  border:1px solid var(--glass-border); background:var(--glass);
+  margin-bottom:26px;
+}
+.eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); animation:pulse-dot 2.2s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:0.35;}}
+.hero h1{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(38px,6vw,66px); line-height:1.03; letter-spacing:-0.02em;
+  margin-bottom:22px;
+}
+.hero h1 .line2{
+  display:block; color:var(--ink-1); font-weight:500; font-size:clamp(19px,2.4vw,26px); margin-top:14px; letter-spacing:0;
+}
+.hero-desc{
+  font-size:16px; line-height:1.7; color:var(--ink-1); max-width:560px; margin-bottom:34px;
+}
+.hero-desc b{color:var(--ink-0); font-weight:600;}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:38px;}
+.hero-meta{display:flex; gap:22px; flex-wrap:wrap;}
+.hero-meta a{
+  display:flex; align-items:center; gap:7px;
+  font-family:var(--font-mono); font-size:12.5px; color:var(--ink-2);
+  transition:color .2s ease;
+}
+.hero-meta a:hover{color:var(--cyan);}
+.hero-meta svg{width:14px; height:14px;}
+
+/* hero visual: glass terminal card */
+.term-card{
+  border-radius:var(--radius-lg);
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+.term-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
+.term-dots{display:flex; gap:6px;}
+.term-dots span{width:9px; height:9px; border-radius:50%; display:block;}
+.term-dots span:nth-child(1){background:#e8737a;}
+.term-dots span:nth-child(2){background:#e8b368;}
+.term-dots span:nth-child(3){background:#5ee1d8;}
+.term-label{font-family:var(--font-mono); font-size:11px; color:var(--ink-2); letter-spacing:0.04em;}
+.term-body{font-family:var(--font-mono); font-size:12.3px; line-height:1.85; color:var(--ink-1);}
+.term-body .k{color:var(--ink-2);}
+.term-body .v{color:var(--ink-0);}
+.term-body .c{color:var(--cyan);}
+.term-body .a{color:var(--amber);}
+.term-body .prompt{color:#6ee3a8;}
+.term-divider{height:1px; background:var(--line); margin:14px 0;}
+.spark{width:100%; height:52px; margin-top:6px;}
+.spark path{fill:none; stroke:var(--cyan); stroke-width:1.6;}
+.spark .fill{stroke:none; fill:url(#sparkFill);}
+
+/* ---------- stat strip ---------- */
+.stat-strip{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+  border:1px solid var(--glass-border); border-radius:var(--radius-md);
+  overflow:hidden; margin-top:52px; background:var(--glass-border);
+}
+@media (max-width:760px){.stat-strip{grid-template-columns:repeat(2,1fr);}}
+.stat{
+  background:rgba(9,14,24,0.75);
+  padding:22px 20px;
+}
+.stat .num{font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--ink-0);}
+.stat .num span{color:var(--cyan);}
+.stat .lbl{font-size:12px; color:var(--ink-2); margin-top:4px; line-height:1.4;}
+
+/* ---------- research / project cards ---------- */
+.card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+@media (max-width:840px){.card-grid{grid-template-columns:1fr;}}
+.proj-card{
+  padding:30px; position:relative; transition:transform .3s cubic-bezier(.2,.8,.3,1), border-color .3s ease;
+}
+.proj-card:hover{transform:translateY(-4px); border-color:rgba(94,225,216,0.3);}
+.proj-top{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:16px;}
+.proj-tag{
+  font-family:var(--font-mono); font-size:11px; color:var(--cyan);
+  border:1px solid rgba(94,225,216,0.3); background:var(--cyan-soft);
+  padding:4px 10px; border-radius:100px;
+}
+.proj-date{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-2);}
+.proj-card h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin-bottom:10px; letter-spacing:-0.01em;}
+.proj-card p{font-size:14px; line-height:1.7; color:var(--ink-1); margin-bottom:16px;}
+.proj-metrics{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
+.metric-chip{
+  font-family:var(--font-mono); font-size:11.5px; color:var(--amber);
+  background:var(--amber-soft); border:1px solid rgba(232,179,104,0.3);
+  padding:5px 11px; border-radius:8px;
+}
+.proj-stack{display:flex; gap:7px; flex-wrap:wrap;}
+.stack-chip{
+  font-size:11.5px; color:var(--ink-2); border:1px solid var(--line);
+  padding:4px 10px; border-radius:100px;
+}
+
+/* ---------- experience timeline ---------- */
+.timeline{position:relative; padding-left:32px; border-left:1px solid var(--line);}
+.tl-item{position:relative; padding-bottom:52px;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-dot{
+  position:absolute; left:-38px; top:4px; width:14px; height:14px; border-radius:50%;
+  background:var(--bg-1); border:2px solid var(--cyan);
+  box-shadow:0 0 0 4px rgba(94,225,216,0.08);
+}
+.tl-item.past .tl-dot{border-color:var(--ink-2); box-shadow:0 0 0 4px rgba(120,140,165,0.06);}
+.tl-card{padding:28px 30px;}
+.tl-top{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:6px;}
+.tl-role{font-family:var(--font-display); font-size:19px; font-weight:600;}
+.tl-time{font-family:var(--font-mono); font-size:12px; color:var(--cyan);}
+.tl-org{font-size:14px; color:var(--ink-1); margin-bottom:18px; display:flex; align-items:center; gap:8px;}
+.tl-org .sep{width:3px; height:3px; border-radius:50%; background:var(--ink-2);}
+.tl-list{list-style:none; display:flex; flex-direction:column; gap:11px;}
+.tl-list li{
+  font-size:14px; line-height:1.7; color:var(--ink-1); padding-left:18px; position:relative;
+}
+.tl-list li::before{
+  content:''; position:absolute; left:0; top:9px; width:6px; height:6px;
+  background:var(--cyan); border-radius:2px; opacity:0.7; transform:rotate(45deg);
+}
+.tl-list li b{color:var(--ink-0); font-weight:600;}
+
+/* ---------- skills ---------- */
+.skill-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+@media (max-width:760px){.skill-grid{grid-template-columns:1fr;}}
+.skill-card{padding:24px 26px;}
+.skill-card h4{
+  font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.04em; color:var(--amber);
+  margin-bottom:14px; display:flex; align-items:center; gap:9px;
+}
+.skill-card h4::before{content:''; width:7px; height:7px; background:var(--amber); border-radius:2px; display:inline-block;}
+.chip-row{display:flex; gap:8px; flex-wrap:wrap;}
+.chip{
+  font-size:12.5px; color:var(--ink-1); background:rgba(255,255,255,0.03);
+  border:1px solid var(--line); padding:6px 12px; border-radius:9px;
+  transition:border-color .2s ease, color .2s ease, background .2s ease;
+}
+.chip:hover{border-color:rgba(94,225,216,0.35); color:var(--ink-0); background:var(--cyan-soft);}
+
+/* ---------- achievements ---------- */
+.ach-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+@media (max-width:840px){.ach-grid{grid-template-columns:1fr;}}
+.ach-card{padding:26px; display:flex; flex-direction:column; gap:14px;}
+.ach-icon{
+  width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(155deg, rgba(232,179,104,0.22), rgba(232,179,104,0.05));
+  border:1px solid rgba(232,179,104,0.28);
+}
+.ach-icon svg{width:20px; height:20px; color:var(--amber);}
+.ach-card h4{font-family:var(--font-display); font-size:16px; font-weight:600;}
+.ach-card .ach-when{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-2);}
+.ach-card p{font-size:13.5px; line-height:1.65; color:var(--ink-1);}
+
+/* ---------- education ---------- */
+.edu-row{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; padding:30px 32px;}
+.edu-left{display:flex; align-items:center; gap:18px;}
+.edu-icon{
+  width:52px; height:52px; border-radius:14px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(155deg, var(--cyan-soft), transparent);
+  border:1px solid rgba(94,225,216,0.28);
+}
+.edu-icon svg{width:24px; height:24px; color:var(--cyan);}
+.edu-name{font-family:var(--font-display); font-size:18px; font-weight:600;}
+.edu-degree{font-size:13.5px; color:var(--ink-1); margin-top:3px;}
+.edu-right{text-align:right; font-family:var(--font-mono); font-size:12.5px; color:var(--ink-2);}
+.edu-right .grade{color:var(--cyan); font-size:15px; font-weight:600; display:block; margin-bottom:4px;}
+
+/* ---------- contact / footer ---------- */
+.contact-wrap{padding:70px 32px; text-align:center; position:relative; overflow:hidden;}
+.contact-wrap h2{
+  font-family:var(--font-display); font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;
+}
+.contact-wrap p{color:var(--ink-1); font-size:15px; max-width:480px; margin:0 auto 30px; line-height:1.7;}
+.contact-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:36px;}
+.contact-links{display:flex; gap:26px; justify-content:center; flex-wrap:wrap;}
+.contact-links a{
+  display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2); font-family:var(--font-mono);
+  transition:color .2s ease;
+}
+.contact-links a:hover{color:var(--cyan);}
+.contact-links svg{width:15px; height:15px;}
+footer{
+  text-align:center; padding:26px; font-size:12px; color:var(--ink-2);
+  border-top:1px solid var(--line); font-family:var(--font-mono);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="grid-field"></div>
+<div class="field-glow"></div>
+
+<nav>
+  <div class="brand">
+    <span class="brand-mark">VM</span>
+    Vishal Mishra
+  </div>
+  <div class="nav-links">
+    <a href="#research">Research</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a class="btn btn-primary" href="mailto:vishal214.mishra@gmail.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+      Get in touch
+    </a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Available for research &amp; quant engineering roles</div>
+        <h1>
+          Quantitative Researcher
+          <span class="line2">&amp; low-latency systems engineer, Mumbai</span>
+        </h1>
+        <p class="hero-desc">
+          I build the math and the machinery behind systematic trading — <b>volatility models, options analytics, and econophysics-driven research</b>, shipped as production-grade <b>C++/Python/React</b> platforms handling multicast tick data, order-book microstructure, and live derivatives execution across Indian markets.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#research">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            View research &amp; projects
+          </a>
+          <a class="btn btn-ghost" href="#experience">Engineering experience</a>
+        </div>
+        <div class="hero-meta">
+          <a href="mailto:vishal214.mishra@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>vishal214.mishra@gmail.com</a>
+          <a href="tel:+917000107054"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.3 1.79.54 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.11a2 2 0 0 1 2.11-.45c.86.24 1.75.42 2.65.54A2 2 0 0 1 22 16.92z"/></svg>+91 70001 07054</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18v-6a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v6"/><path d="M2 12l10-8 10 8"/></svg>Mumbai, India</a>
+        </div>
+      </div>
+
+      <div class="term-card glass">
+        <div class="term-head">
+          <div class="term-dots"><span></span><span></span><span></span></div>
+          <div class="term-label">quant_desk // profile.log</div>
+        </div>
+        <div class="term-body">
+          <div><span class="prompt">&gt;</span> <span class="k">role</span> <span class="v">Quantitative Associate</span></div>
+          <div><span class="prompt">&gt;</span> <span class="k">desk</span> <span class="v">Vikabh Securities · Derivatives</span></div>
+          <div><span class="prompt">&gt;</span> <span class="k">stack</span> <span class="c">C++17</span> · <span class="c">Python</span> · <span class="c">React</span> · <span class="c">QuestDB</span></div>
+          <div class="term-divider"></div>
+          <div><span class="prompt">&gt;</span> <span class="k">tick_pipeline</span> <span class="a">508B</span> binary snapshots</div>
+          <div><span class="prompt">&gt;</span> <span class="k">storage_gain</span> <span class="a">~10–15×</span> vs JSON</div>
+          <div><span class="prompt">&gt;</span> <span class="k">iv_model_mse</span> <span class="a">7.15e-05</span> (NIFTY50)</div>
+          <div><span class="prompt">&gt;</span> <span class="k">order_pool</span> <span class="a">5,000,000</span> slots · O(1) lookup</div>
+          <div class="term-divider"></div>
+          <svg class="spark" viewBox="0 0 300 60" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5ee1d8" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#5ee1d8" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="fill" d="M0,40 L20,36 L40,42 L60,28 L80,32 L100,18 L120,24 L140,14 L160,20 L180,10 L200,16 L220,8 L240,12 L260,4 L280,10 L300,2 L300,60 L0,60 Z"/>
+            <path d="M0,40 L20,36 L40,42 L60,28 L80,32 L100,18 L120,24 L140,14 L160,20 L180,10 L200,16 L220,8 L240,12 L260,4 L280,10 L300,2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="num"><span>18+</span></div><div class="lbl">Technical indicators shipped in QuantResearch library</div></div>
+      <div class="stat"><div class="num"><span>10–15×</span></div><div class="lbl">Tick-storage compression vs raw JSON</div></div>
+      <div class="stat"><div class="num"><span>Top 150</span></div><div class="lbl">Globally — Akuna Capital Options 201, 2025</div></div>
+      <div class="stat"><div class="num"><span>38,000+</span></div><div class="lbl">Competitors outranked — Google GenAI Hackathon</div></div>
+    </div>
+  </section>
+
+  <!-- ============ RESEARCH ============ -->
+  <section id="research">
+    <div class="section-head">
+      <span class="section-index">01</span>
+      <span class="section-title">Research &amp; Quantitative Work</span>
+      <span class="section-sub">Volatility modeling, econophysics, and open-source tooling for systematic research</span>
+    </div>
+
+    <div class="card-grid">
+      <div class="proj-card glass">
+        <div class="proj-top">
+          <span class="proj-tag">Open source · PyPI</span>
+          <span class="proj-date">Nov 2025 — present</span>
+        </div>
+        <h3>QuantResearch — v2.5</h3>
+        <p>
+          A full-stack quantitative analysis library built around <b>QuantQL</b>, a compiled domain-specific language for strategy scripting — indicator-based entry/exit logic, stop-loss/take-profit rules, commission and slippage modeling, and automated equity-curve reporting.
+        </p>
+        <div class="proj-metrics">
+          <span class="metric-chip">18+ indicators</span>
+          <span class="metric-chip">Sharpe / Sortino / Calmar / VaR / CVaR</span>
+          <span class="metric-chip">NSE · BSE · US · Crypto feeds</span>
+        </div>
+        <div class="proj-stack">
+          <span class="stack-chip">Python</span><span class="stack-chip">PyPI</span><span class="stack-chip">WebSocket</span><span class="stack-chip">Git</span>
+        </div>
+      </div>
+
+      <div class="proj-card glass">
+        <div class="proj-top">
+          <span class="proj-tag">Kaggle competition</span>
+          <span class="proj-date">Jun 2025 — Jul 2025</span>
+        </div>
+        <h3>Volatility Curve Prediction</h3>
+        <p>
+          A quadratic Huber-regression pipeline for implied-volatility surface prediction across moneyness and tenor, engineered with <b>40+ derivative-based features</b> — delta-adjusted ratios, vega exposures, gamma surfaces — tuned via systematic hyperparameter search and k-fold cross-validation.
+        </p>
+        <div class="proj-metrics">
+          <span class="metric-chip">MSE 7.15 × 10⁻⁵</span>
+          <span class="metric-chip">Beat threshold of 7.89 × 10⁻⁵</span>
+        </div>
+        <div class="proj-stack">
+          <span class="stack-chip">Python</span><span class="stack-chip">Pandas</span><span class="stack-chip">Scikit-learn</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:64px;">
+      <span class="section-index">01.1</span>
+      <span class="section-title" style="font-size:22px;">Strategy Design, Greeks Analytics &amp; HFT Signals</span>
+    </div>
+
+    <div class="card-grid">
+      <div class="proj-card glass">
+        <div class="proj-top">
+          <span class="proj-tag">Options structuring</span>
+        </div>
+        <h3>Customized options strategies</h3>
+        <p>
+          Structured and backtested <b>Iron Condors, Broken Wing Butterflies, and ratio spreads</b> as premium-fraction plays rather than fixed templates — each strategy's strikes, wing widths, and sizing adapt to the prevailing IV regime.
+        </p>
+        <div class="proj-metrics">
+          <span class="metric-chip">DTE-adaptive stoploss scaling</span>
+          <span class="metric-chip">Premium-fraction sizing</span>
+          <span class="metric-chip">3yr walk-forward validation</span>
+        </div>
+      </div>
+
+      <div class="proj-card glass">
+        <div class="proj-top">
+          <span class="proj-tag">Risk analytics</span>
+        </div>
+        <h3>Greeks-driven risk overlays</h3>
+        <p>
+          Every structure is monitored and re-sized against live <b>Delta, Gamma, Theta, and Vega</b> exposure — synthetic-ATM option chains and Greeks matrices render in real time, and post-trade Greek attribution explains exactly which exposure drove each day's P&amp;L.
+        </p>
+        <div class="proj-metrics">
+          <span class="metric-chip">Real-time Greeks matrices</span>
+          <span class="metric-chip">Post-trade attribution</span>
+          <span class="metric-chip">IV skew heatmaps</span>
+        </div>
+      </div>
+
+      <div class="proj-card glass">
+        <div class="proj-top">
+          <span class="proj-tag">Microstructure · HFT</span>
+        </div>
+        <h3>Trend detection from order-book microstructure</h3>
+        <p>
+          Built high-frequency signals directly off the multicast order book — <b>order-book imbalance (OBI)</b> and liquidity-dominance metrics — to detect short-horizon directional trend before it shows up in price, feeding it into wavelet (SWT/MRA) and spectral (Welch PSD, STFT) regime detection for volatility-state-aware entries.
+        </p>
+        <div class="proj-metrics">
+          <span class="metric-chip">Order-book imbalance</span>
+          <span class="metric-chip">Liquidity dominance</span>
+          <span class="metric-chip">Wavelet / spectral regime detection</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-index">02</span>
+      <span class="section-title">Engineering &amp; Development Experience</span>
+      <span class="section-sub">Turning research into production systems — from multicast feeds to live risk management</span>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass">
+          <div class="tl-top">
+            <span class="tl-role">Quantitative Associate</span>
+            <span class="tl-time">Dec 2025 — Current</span>
+          </div>
+          <div class="tl-org">Vikabh Securities <span class="sep"></span> Mumbai, India</div>
+          <ul class="tl-list">
+            <li>Architected an end-to-end, production <b>market-data &amp; backtesting platform</b> (React, FastAPI, QuestDB, Redis, DuckDB) across 15+ services — from raw exchange feed to live options/futures execution.</li>
+            <li>Built a three-tier <b>C++ multicast market-data pipeline</b> (LOB builder → binary logger → Python bridge) using a 5,000,000-slot preallocated order pool and O(1) hash-indexed lookups; 508-byte binary snapshots cut daily tick storage ~10–15× versus JSON (~1GB vs. 10–15GB per 2M ticks/day), with warm-up state recovery restoring full mathematical parity after mid-day restarts.</li>
+            <li>Designed a dual-node active-active <b>QuestDB/Redis data gateway</b> with automated failover (5-minute staleness watchdog) and NDJSON streaming, cutting API latency to near-zero via a Redis sorted-set cache, plus a DuckDB/Parquet historical engine with MD5-hashed query caching and dynamic OHLC time-bucketing (1m→60m).</li>
+            <li>Designed a <b>Smart-Netting OMS/RMS</b> over ZeroMQ pub/sub that nets sub-strategy signals into a single broker order — order slicing for exchange compliance, burst-queue batching, per-strategy risk guardrails, and an emergency square-off kill switch for instant closure.</li>
+            <li>Shipped a parallelized backtest suite spanning <b>econophysics-style energy models</b>, DTE-adaptive stoploss scaling, and premium-fraction options structuring (Iron Condor / BWB / ratio spreads); the portfolio module computes Sharpe/Sortino/skew/kurtosis and simulates Indian tax drag with high-water-mark tracking across rolling 3-year walk-forward tranches.</li>
+            <li>Applied <b>wavelet</b> (SWT/MRA — Daubechies-4, CWT — Complex Morlet) and <b>spectral</b> (Welch PSD, STFT) decomposition to options IV for volatility-regime detection, and delivered 6+ live dashboards (React, Recharts/Plotly) rendering synthetic-ATM option chains, Greeks matrices, and IV skew heatmaps in real time.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item past">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass">
+          <div class="tl-top">
+            <span class="tl-role">Trainee Engineer</span>
+            <span class="tl-time">Jun 2025 — Nov 2025</span>
+          </div>
+          <div class="tl-org">Bixware Technologies <span class="sep"></span> Mumbai, India</div>
+          <ul class="tl-list">
+            <li>Built <b>Azure Data Factory</b> pipelines with linked services to extract data from SAP into Azure Databricks for large-scale retail analytics.</li>
+            <li>Automated ShopperStop &amp; Lifestyle data downloads with Python, significantly reducing manual intervention.</li>
+            <li>Built the scalable <b>Bix AI RAG Bot</b>: LangChain orchestration, vector-DB semantic embeddings, ChatGPT/Gemini LLMs — a 50% retrieval-latency reduction via caching and index optimization across 500+ document repositories.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item past">
+        <div class="tl-dot"></div>
+        <div class="tl-card glass">
+          <div class="tl-top">
+            <span class="tl-role">Implementation Engineer Intern</span>
+            <span class="tl-time">Jan 2025 — Mar 2025</span>
+          </div>
+          <div class="tl-org">Engagely.ai <span class="sep"></span> Mumbai, India</div>
+          <ul class="tl-list">
+            <li>Optimized GenAI NLP intent-classification workflows and dynamic response routing — a 35% engagement uplift with 40% lower latency.</li>
+            <li>Developed a scalable WhatsApp bot on Flask APIs, boosting engagement by 35%.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-index">03</span>
+      <span class="section-title">Technical Toolkit</span>
+      <span class="section-sub">Mathematics-first, systems-grade — the layers underneath every model</span>
+    </div>
+
+    <div class="skill-grid">
+      <div class="skill-card glass">
+        <h4>Quantitative finance</h4>
+        <div class="chip-row">
+          <span class="chip">Order-book microstructure</span><span class="chip">OBI &amp; liquidity dominance</span>
+          <span class="chip">Portfolio optimization (MPT, Kelly)</span><span class="chip">Volatility modeling</span>
+          <span class="chip">Garman-Klass</span><span class="chip">IV surfaces</span>
+          <span class="chip">Wavelet analysis (SWT/MRA, CWT)</span><span class="chip">Spectral methods (Welch PSD, STFT)</span>
+          <span class="chip">Econophysics</span><span class="chip">Greeks (Δ Γ Θ ν)</span>
+          <span class="chip">ARIMA / ATR</span><span class="chip">BWB · Iron Condor</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Systems &amp; low-latency</h4>
+        <div class="chip-row">
+          <span class="chip">Lock-free SPSC queues</span><span class="chip">CPU core pinning</span>
+          <span class="chip">Preallocated memory pools</span><span class="chip">UDP multicast</span>
+          <span class="chip">ZeroMQ pub/sub · push/pull</span><span class="chip">WebSocket</span>
+          <span class="chip">Binary serialization</span><span class="chip">NDJSON streaming</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Languages &amp; ML</h4>
+        <div class="chip-row">
+          <span class="chip">C++17</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Bash</span>
+          <span class="chip">Regression</span><span class="chip">Classification</span><span class="chip">Feature engineering</span><span class="chip">Hyperparameter tuning</span>
+        </div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Math, tools &amp; platforms</h4>
+        <div class="chip-row">
+          <span class="chip">Probability &amp; statistics</span><span class="chip">Linear algebra</span><span class="chip">Calculus</span><span class="chip">Optimization</span>
+          <span class="chip">Flask</span><span class="chip">Streamlit</span><span class="chip">Docker</span><span class="chip">Databricks</span>
+          <span class="chip">Redis</span><span class="chip">QuestDB</span><span class="chip">Git</span><span class="chip">DSA · OS · Networks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section id="achievements">
+    <div class="section-head">
+      <span class="section-index">04</span>
+      <span class="section-title">Achievements</span>
+      <span class="section-sub">Recognition across trading, systems, and applied AI</span>
+    </div>
+
+    <div class="ach-grid">
+      <div class="ach-card glass">
+        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z"/></svg></div>
+        <h4>Akuna Capital Options 201</h4>
+        <div class="ach-when">2025 · Selected Top 150 globally</div>
+        <p>Advanced through resume screen, online assessment, and interview. Focused on options pricing, volatility curves, market-making strategies, and the role of technology in trading.</p>
+      </div>
+      <div class="ach-card glass">
+        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h4>AMD × SPRINT Hackathon</h4>
+        <div class="ach-when">2025 · 1st Runner-Up</div>
+        <p>Built a GPU-optimized LLM scheduler achieving 0.3-second inference latency.</p>
+      </div>
+      <div class="ach-card glass">
+        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h4>Google GenAI Hackathon</h4>
+        <div class="ach-when">2024 · Top 3 of 38,000+</div>
+        <p>Built Chikitsa — an AI-powered mental-health support platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EDUCATION ============ -->
+  <section id="education">
+    <div class="section-head">
+      <span class="section-index">05</span>
+      <span class="section-title">Education</span>
+      <span class="section-sub"></span>
+    </div>
+    <div class="edu-row glass">
+      <div class="edu-left">
+        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
+        <div>
+          <div class="edu-name">Mumbai University</div>
+          <div class="edu-degree">Bachelor of Engineering, Computer Engineering</div>
+        </div>
+      </div>
+      <div class="edu-right">
+        <span class="grade">CGPA 7.75 / 10</span>
+        Nov 2021 — Jun 2025 · Mumbai, India
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact">
+    <div class="contact-wrap glass">
+      <h2>Let's talk quant, systems, or both.</h2>
+      <p>Open to quantitative research, trading technology, and low-latency systems roles. Reach out — I usually reply within a day.</p>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="mailto:vishal214.mishra@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
+          vishal214.mishra@gmail.com
+        </a>
+        <a class="btn btn-ghost" href="tel:+917000107054">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.3 1.79.54 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.11a2 2 0 0 1 2.11-.45c.86.24 1.75.42 2.65.54A2 2 0 0 1 22 16.92z"/></svg>
+          +91 70001 07054
+        </a>
+      </div>
+      <div class="contact-links">
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
+        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>CodeChef</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Vishal Mishra — Quantitative Researcher &amp; Systems Engineer · Mumbai, India</footer>
+
+</body>
+</html>
