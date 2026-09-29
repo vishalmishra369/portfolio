@@ -1,366 +1,361 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="god">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vishal Mishra — Quantitative Researcher &amp; Systems Engineer</title>
+<title>Vishal Mishra — Quantitative Developer &amp; Researcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ============================================================
+   THEME TOKENS
+   ============================================================ */
 :root{
-  --bg-0:#060a12;
-  --bg-1:#0a1120;
-  --bg-2:#0d1626;
-  --line:rgba(148,178,212,0.14);
-  --glass:rgba(150,180,220,0.06);
-  --glass-strong:rgba(160,190,230,0.10);
-  --glass-border:rgba(180,205,235,0.14);
-  --ink-0:#eef3f9;
-  --ink-1:#aab8ce;
-  --ink-2:#748099;
-  --cyan:#5ee1d8;
-  --cyan-soft:rgba(94,225,216,0.16);
-  --amber:#e8b368;
-  --amber-soft:rgba(232,179,104,0.15);
-  --violet:#9c8cf0;
-  --danger:#e8737a;
+  /* ---- GOD (default) ---- */
+  --bg-0:#faf6ec;
+  --bg-1:#f5edd9;
+  --bg-2:#eee0bd;
+  --ink-0:#221d13;
+  --ink-1:#5c5340;
+  --ink-2:#8d8267;
+  --line:rgba(130,100,30,0.20);
+  --glass:rgba(255,253,246,0.62);
+  --glass-strong:rgba(255,253,246,0.85);
+  --glass-border:rgba(175,133,40,0.35);
+  --accent:#a9791e;
+  --accent-bright:#e2b53c;
+  --accent-soft:rgba(201,162,39,0.16);
+  --accent-2:#7a5a9c;
+  --accent-2-soft:rgba(122,90,156,0.12);
+  --danger:#a4392c;
+  --shadow-a:rgba(120,95,30,0.20);
+  --shadow-b:rgba(120,95,30,0.35);
   --radius-lg:22px;
   --radius-md:14px;
   --radius-sm:9px;
-  --font-display:'Space Grotesk',sans-serif;
-  --font-mono:'IBM Plex Mono',monospace;
+  --font-display:'Cormorant Garamond',serif;
   --font-body:'Inter',sans-serif;
+  --font-mono:'IBM Plex Mono',monospace;
+  --sweep:linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.55) 48%, rgba(255,255,255,0.55) 52%, transparent 70%);
 }
+html[data-theme="demon"]{
+  --bg-0:#0a0509;
+  --bg-1:#0f0810;
+  --bg-2:#170b18;
+  --ink-0:#f3e8ee;
+  --ink-1:#c6aebd;
+  --ink-2:#8d7285;
+  --line:rgba(200,45,65,0.24);
+  --glass:rgba(40,10,20,0.42);
+  --glass-strong:rgba(58,14,26,0.62);
+  --glass-border:rgba(205,45,65,0.32);
+  --accent:#c0392b;
+  --accent-bright:#ef5b45;
+  --accent-soft:rgba(192,57,43,0.20);
+  --accent-2:#8e3fae;
+  --accent-2-soft:rgba(142,63,174,0.16);
+  --danger:#e2b53c;
+  --shadow-a:rgba(150,15,30,0.30);
+  --shadow-b:rgba(150,15,30,0.45);
+  --sweep:linear-gradient(100deg, transparent 30%, rgba(239,91,69,0.35) 48%, rgba(239,91,69,0.35) 52%, transparent 70%);
+}
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   background:
-    radial-gradient(1200px 700px at 82% -10%, rgba(94,225,216,0.09), transparent 60%),
-    radial-gradient(900px 600px at -10% 30%, rgba(156,140,240,0.08), transparent 55%),
-    linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 45%,var(--bg-2) 100%);
+    radial-gradient(1100px 650px at 85% -8%, var(--accent-soft), transparent 60%),
+    radial-gradient(900px 600px at -8% 25%, var(--accent-2-soft), transparent 55%),
+    linear-gradient(180deg,var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
   color:var(--ink-0);
   font-family:var(--font-body);
   min-height:100vh;
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  transition:background .5s ease, color .5s ease;
 }
-::selection{background:var(--cyan-soft);color:var(--ink-0);}
-a{color:inherit;text-decoration:none;}
+::selection{background:var(--accent-soft); color:var(--ink-0);}
+a{color:inherit; text-decoration:none;}
 img{max-width:100%;}
+.god-only{display:inline;}
+.demon-only{display:none;}
+html[data-theme="demon"] .god-only{display:none;}
+html[data-theme="demon"] .demon-only{display:inline;}
 
-/* ---------- background grid + noise ---------- */
+/* ---------- background field ---------- */
 .grid-field{
   position:fixed; inset:0; z-index:0; pointer-events:none;
   background-image:
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size:64px 64px;
-  mask-image:radial-gradient(ellipse 80% 60% at 50% 10%, rgba(0,0,0,0.9), transparent 75%);
-  opacity:0.5;
+  background-size:68px 68px;
+  mask-image:radial-gradient(ellipse 80% 55% at 50% 8%, rgba(0,0,0,0.85), transparent 75%);
+  opacity:0.55;
+  transition:opacity .5s ease;
 }
-.field-glow{
-  position:fixed; z-index:0; pointer-events:none; inset:0;
+.field-glow{position:fixed; z-index:0; pointer-events:none; inset:0;
   background:
-    radial-gradient(600px 300px at 15% 8%, rgba(94,225,216,0.10), transparent 70%),
-    radial-gradient(500px 260px at 90% 18%, rgba(232,179,104,0.08), transparent 70%);
+    radial-gradient(620px 320px at 12% 6%, var(--accent-soft), transparent 70%),
+    radial-gradient(520px 280px at 92% 16%, var(--accent-2-soft), transparent 70%);
 }
 
 /* ---------- nav ---------- */
 nav{
-  position:sticky; top:0; z-index:40;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px clamp(20px,6vw,64px);
-  background:rgba(8,13,22,0.55);
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:15px clamp(18px,5vw,56px);
+  background:var(--glass);
   backdrop-filter:blur(18px) saturate(140%);
   -webkit-backdrop-filter:blur(18px) saturate(140%);
   border-bottom:1px solid var(--line);
+  transition:background .5s ease, border-color .5s ease;
 }
-.brand{
-  display:flex; align-items:center; gap:10px;
-  font-family:var(--font-display); font-weight:600; font-size:15px; letter-spacing:0.01em;
-}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:19px;}
 .brand-mark{
-  width:30px; height:30px; border-radius:9px;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(150deg, rgba(94,225,216,0.22), rgba(156,140,240,0.14));
-  border:1px solid var(--glass-border);
-  font-family:var(--font-mono); font-size:12px; color:var(--cyan);
+  width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(150deg, var(--accent-soft), transparent);
+  border:1px solid var(--glass-border); font-family:var(--font-mono); font-size:12px; color:var(--accent);
 }
-.nav-links{display:flex; gap:6px; align-items:center;}
-.nav-links a{
-  font-size:13.5px; color:var(--ink-1); padding:8px 14px; border-radius:100px;
-  transition:color .2s ease, background .2s ease;
-}
-.nav-links a:hover{color:var(--ink-0); background:var(--glass);}
-.nav-cta{display:none;}
-@media (min-width:720px){.nav-cta{display:block;}}
+.nav-links{display:none; gap:2px; align-items:center;}
+@media (min-width:960px){.nav-links{display:flex;}}
+.nav-links a{font-size:13.5px; font-weight:500; color:var(--ink-1); padding:8px 13px; border-radius:100px; transition:color .2s ease, background .2s ease;}
+.nav-links a:hover{color:var(--ink-0); background:var(--accent-soft);}
+.nav-right{display:flex; align-items:center; gap:14px;}
 
-/* ---------- glass buttons (iOS-esque) ---------- */
+/* theme toggle switch */
+.theme-toggle{display:inline-flex; align-items:center; cursor:pointer;}
+.theme-toggle input{display:none;}
+.toggle-track{
+  position:relative; width:62px; height:32px; border-radius:100px;
+  background:linear-gradient(180deg, var(--glass-strong), var(--glass));
+  border:1px solid var(--glass-border);
+  display:flex; align-items:center; padding:3px;
+  box-shadow:inset 0 2px 6px var(--shadow-a);
+  transition:background .4s ease, border-color .4s ease;
+}
+.toggle-thumb{
+  width:24px; height:24px; border-radius:50%;
+  background:linear-gradient(155deg, var(--accent-bright), var(--accent));
+  box-shadow:0 2px 8px var(--shadow-b);
+  transform:translateX(0);
+  transition:transform .35s cubic-bezier(.2,.8,.3,1.2), background .4s ease;
+  display:flex; align-items:center; justify-content:center;
+}
+html[data-theme="demon"] .toggle-thumb{transform:translateX(30px);}
+.toggle-thumb svg{width:13px; height:13px; color:#fff;}
+.toggle-icon-static{position:absolute; width:12px; height:12px; opacity:0.55; color:var(--ink-2);}
+.toggle-icon-static.sun{left:7px;}
+.toggle-icon-static.moon{right:7px;}
+
+/* ---------- glass buttons ---------- */
 .btn{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:11px 22px;
-  border-radius:100px;
+  display:inline-flex; align-items:center; gap:8px; padding:11px 24px; border-radius:100px;
   font-family:var(--font-body); font-weight:600; font-size:13.5px;
   border:1px solid var(--glass-border);
-  background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
+  background:linear-gradient(180deg, var(--glass-strong), var(--glass));
   backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    inset 0 -8px 16px -8px rgba(0,0,0,0.35),
-    0 6px 20px -8px rgba(0,0,0,0.5);
-  color:var(--ink-0);
-  cursor:pointer; transition:transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .25s ease, border-color .25s ease;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 20px -8px var(--shadow-a);
+  color:var(--ink-0); cursor:pointer; position:relative; overflow:hidden;
+  transition:transform .18s cubic-bezier(.2,.9,.3,1), box-shadow .25s ease, border-color .25s ease;
   -webkit-tap-highlight-color:transparent;
 }
-.btn:hover{
-  transform:translateY(-2px);
-  border-color:rgba(94,225,216,0.4);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.22),
-    inset 0 -8px 16px -8px rgba(0,0,0,0.35),
-    0 10px 28px -8px rgba(94,225,216,0.25);
+.btn::after{
+  content:''; position:absolute; inset:0; background:var(--sweep);
+  background-size:220% 100%; background-position:120% 0; opacity:0; transition:opacity .3s ease, background-position .6s ease;
 }
-.btn:active{transform:translateY(0px) scale(0.97);}
-.btn-primary{
-  background:linear-gradient(180deg, rgba(94,225,216,0.30), rgba(94,225,216,0.08));
-  border-color:rgba(94,225,216,0.4);
-  color:#eafffb;
-}
-.btn-primary:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), 0 12px 30px -10px rgba(94,225,216,0.45);}
+.btn:hover::after{opacity:1; background-position:-20% 0;}
+.btn:hover{transform:translateY(-2px); border-color:var(--accent); box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), 0 10px 30px -8px var(--shadow-b);}
+.btn:active{transform:translateY(0) scale(0.97);}
+.btn-primary{background:linear-gradient(180deg, var(--accent-bright), var(--accent)); border-color:var(--accent); color:#fffaf0;}
+html[data-theme="demon"] .btn-primary{color:#fff0ee;}
 .btn-ghost{background:rgba(255,255,255,0.02);}
 .btn svg{width:15px; height:15px; opacity:0.85;}
 
-/* ---------- glass surfaces ---------- */
+/* ---------- glass surface ---------- */
 .glass{
   background:linear-gradient(155deg, var(--glass-strong), var(--glass));
   border:1px solid var(--glass-border);
-  backdrop-filter:blur(20px) saturate(130%);
-  -webkit-backdrop-filter:blur(20px) saturate(130%);
+  backdrop-filter:blur(20px) saturate(130%); -webkit-backdrop-filter:blur(20px) saturate(130%);
   border-radius:var(--radius-lg);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    0 20px 50px -30px rgba(0,0,0,0.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.12), 0 20px 50px -30px var(--shadow-b);
+  transition:background .5s ease, border-color .5s ease, box-shadow .5s ease;
 }
 
-/* ---------- layout shells ---------- */
 main{position:relative; z-index:2;}
-section{
-  padding:96px clamp(20px,6vw,64px);
-  max-width:1220px; margin:0 auto;
-}
-.section-head{
-  display:flex; align-items:baseline; gap:16px; margin-bottom:44px;
-  border-bottom:1px solid var(--line); padding-bottom:20px;
-}
-.section-index{
-  font-family:var(--font-mono); font-size:12px; color:var(--cyan); letter-spacing:0.06em;
-}
-.section-title{
-  font-family:var(--font-display); font-size:clamp(26px,3vw,34px); font-weight:600; letter-spacing:-0.01em;
-}
-.section-sub{
-  font-size:14px; color:var(--ink-2); margin-left:auto; max-width:280px; text-align:right; line-height:1.5;
-}
-@media (max-width:680px){.section-sub{display:none;}}
+section{padding:92px clamp(18px,5vw,60px); max-width:1220px; margin:0 auto;}
+.section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:40px; border-bottom:1px solid var(--line); padding-bottom:18px;}
+.section-index{font-family:var(--font-mono); font-size:12px; color:var(--accent); letter-spacing:0.06em;}
+.section-title{font-family:var(--font-display); font-size:clamp(28px,3.2vw,38px); font-weight:700; letter-spacing:-0.005em;}
+.section-sub{font-size:13.5px; color:var(--ink-2); margin-left:auto; max-width:290px; text-align:right; line-height:1.55;}
+@media (max-width:700px){.section-sub{display:none;}}
+.section-lede{font-size:15px; line-height:1.75; color:var(--ink-1); max-width:760px; margin-bottom:36px;}
 
 /* ---------- hero ---------- */
-.hero{padding-top:76px; padding-bottom:60px; position:relative;}
-.hero-grid{display:grid; grid-template-columns:1.35fr 1fr; gap:56px; align-items:center;}
+.hero{padding-top:70px; padding-bottom:44px;}
+.hero-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:52px; align-items:center;}
 @media (max-width:920px){.hero-grid{grid-template-columns:1fr;}}
-.eyebrow{
-  display:inline-flex; align-items:center; gap:9px;
-  font-family:var(--font-mono); font-size:12px; color:var(--ink-1);
-  padding:7px 14px; border-radius:100px;
-  border:1px solid var(--glass-border); background:var(--glass);
-  margin-bottom:26px;
-}
-.eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); animation:pulse-dot 2.2s ease-in-out infinite;}
-@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:0.35;}}
-.hero h1{
-  font-family:var(--font-display); font-weight:700;
-  font-size:clamp(38px,6vw,66px); line-height:1.03; letter-spacing:-0.02em;
-  margin-bottom:22px;
-}
-.hero h1 .line2{
-  display:block; color:var(--ink-1); font-weight:500; font-size:clamp(19px,2.4vw,26px); margin-top:14px; letter-spacing:0;
-}
-.hero-desc{
-  font-size:16px; line-height:1.7; color:var(--ink-1); max-width:560px; margin-bottom:34px;
-}
+.eyebrow{display:inline-flex; align-items:center; gap:9px; font-family:var(--font-mono); font-size:12px; color:var(--ink-1); padding:7px 14px; border-radius:100px; border:1px solid var(--glass-border); background:var(--glass); margin-bottom:24px;}
+.eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse-dot 2.4s ease-in-out infinite;}
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.hero h1{font-family:var(--font-display); font-weight:700; font-size:clamp(36px,5.6vw,60px); line-height:1.05; letter-spacing:-0.01em; margin-bottom:20px;}
+.hero .role-line{display:block; color:var(--accent); font-weight:600; font-size:clamp(17px,2.1vw,22px); margin-top:12px; font-family:var(--font-body);}
+.hero-desc{font-size:16px; line-height:1.75; color:var(--ink-1); max-width:580px; margin-bottom:28px;}
 .hero-desc b{color:var(--ink-0); font-weight:600;}
-.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:38px;}
-.hero-meta{display:flex; gap:22px; flex-wrap:wrap;}
-.hero-meta a{
-  display:flex; align-items:center; gap:7px;
-  font-family:var(--font-mono); font-size:12.5px; color:var(--ink-2);
-  transition:color .2s ease;
-}
-.hero-meta a:hover{color:var(--cyan);}
-.hero-meta svg{width:14px; height:14px;}
+.hero-bullets{list-style:none; display:flex; flex-direction:column; gap:9px; margin-bottom:30px;}
+.hero-bullets li{font-size:14px; color:var(--ink-1); padding-left:20px; position:relative; line-height:1.6;}
+.hero-bullets li::before{content:''; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); border-radius:2px; transform:rotate(45deg); opacity:0.8;}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap;}
 
-/* hero visual: glass terminal card */
-.term-card{
-  border-radius:var(--radius-lg);
-  padding:22px;
-  position:relative;
-  overflow:hidden;
-}
-.term-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
-.term-dots{display:flex; gap:6px;}
-.term-dots span{width:9px; height:9px; border-radius:50%; display:block;}
-.term-dots span:nth-child(1){background:#e8737a;}
-.term-dots span:nth-child(2){background:#e8b368;}
-.term-dots span:nth-child(3){background:#5ee1d8;}
-.term-label{font-family:var(--font-mono); font-size:11px; color:var(--ink-2); letter-spacing:0.04em;}
-.term-body{font-family:var(--font-mono); font-size:12.3px; line-height:1.85; color:var(--ink-1);}
-.term-body .k{color:var(--ink-2);}
-.term-body .v{color:var(--ink-0);}
-.term-body .c{color:var(--cyan);}
-.term-body .a{color:var(--amber);}
-.term-body .prompt{color:#6ee3a8;}
-.term-divider{height:1px; background:var(--line); margin:14px 0;}
-.spark{width:100%; height:52px; margin-top:6px;}
-.spark path{fill:none; stroke:var(--cyan); stroke-width:1.6;}
-.spark .fill{stroke:none; fill:url(#sparkFill);}
+.hero-card{padding:24px;}
+.hc-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+.hc-dots{display:flex; gap:6px;}
+.hc-dots span{width:9px; height:9px; border-radius:50%; display:block;}
+.hc-dots span:nth-child(1){background:var(--danger);}
+.hc-dots span:nth-child(2){background:var(--accent-bright);}
+.hc-dots span:nth-child(3){background:var(--accent-2);}
+.hc-label{font-family:var(--font-mono); font-size:11px; color:var(--ink-2); letter-spacing:0.04em;}
+.hc-body{font-family:var(--font-mono); font-size:12.3px; line-height:1.9; color:var(--ink-1);}
+.hc-body .k{color:var(--ink-2);}
+.hc-body .v{color:var(--ink-0);}
+.hc-body .c{color:var(--accent);}
+.hc-body .prompt{color:var(--accent-2);}
+.hc-div{height:1px; background:var(--line); margin:13px 0;}
 
-/* ---------- stat strip ---------- */
-.stat-strip{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
-  border:1px solid var(--glass-border); border-radius:var(--radius-md);
-  overflow:hidden; margin-top:52px; background:var(--glass-border);
-}
+.stat-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; border:1px solid var(--glass-border); border-radius:var(--radius-md); overflow:hidden; margin-top:48px; background:var(--glass-border);}
 @media (max-width:760px){.stat-strip{grid-template-columns:repeat(2,1fr);}}
-.stat{
-  background:rgba(9,14,24,0.75);
-  padding:22px 20px;
-}
-.stat .num{font-family:var(--font-display); font-size:26px; font-weight:600; color:var(--ink-0);}
-.stat .num span{color:var(--cyan);}
-.stat .lbl{font-size:12px; color:var(--ink-2); margin-top:4px; line-height:1.4;}
+.stat{background:var(--glass-strong); padding:22px 20px;}
+.stat .num{font-family:var(--font-display); font-size:27px; font-weight:700; color:var(--ink-0);}
+.stat .num span{color:var(--accent);}
+.stat .lbl{font-size:11.5px; color:var(--ink-2); margin-top:4px; line-height:1.4;}
 
-/* ---------- research / project cards ---------- */
-.card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
-@media (max-width:840px){.card-grid{grid-template-columns:1fr;}}
-.proj-card{
-  padding:30px; position:relative; transition:transform .3s cubic-bezier(.2,.8,.3,1), border-color .3s ease;
-}
-.proj-card:hover{transform:translateY(-4px); border-color:rgba(94,225,216,0.3);}
-.proj-top{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:16px;}
-.proj-tag{
-  font-family:var(--font-mono); font-size:11px; color:var(--cyan);
-  border:1px solid rgba(94,225,216,0.3); background:var(--cyan-soft);
-  padding:4px 10px; border-radius:100px;
-}
-.proj-date{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-2);}
-.proj-card h3{font-family:var(--font-display); font-size:20px; font-weight:600; margin-bottom:10px; letter-spacing:-0.01em;}
-.proj-card p{font-size:14px; line-height:1.7; color:var(--ink-1); margin-bottom:16px;}
-.proj-metrics{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;}
-.metric-chip{
-  font-family:var(--font-mono); font-size:11.5px; color:var(--amber);
-  background:var(--amber-soft); border:1px solid rgba(232,179,104,0.3);
-  padding:5px 11px; border-radius:8px;
-}
-.proj-stack{display:flex; gap:7px; flex-wrap:wrap;}
-.stack-chip{
-  font-size:11.5px; color:var(--ink-2); border:1px solid var(--line);
-  padding:4px 10px; border-radius:100px;
-}
+/* ---------- about ---------- */
+.about-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:34px;}
+@media (max-width:880px){.about-grid{grid-template-columns:1fr;}}
+.about-body p{font-size:15px; line-height:1.8; color:var(--ink-1); margin-bottom:16px;}
+.about-body p b{color:var(--ink-0); font-weight:600;}
+.focus-list{list-style:none; display:flex; flex-direction:column; gap:11px; margin-top:20px;}
+.focus-list li{font-size:14px; color:var(--ink-1); padding-left:22px; position:relative;}
+.focus-list li::before{content:''; position:absolute; left:0; top:7px; width:8px; height:8px; border:2px solid var(--accent); border-radius:2px; transform:rotate(45deg);}
+.edu-card{padding:26px;}
+.edu-card h4{font-family:var(--font-display); font-size:19px; font-weight:700; margin-bottom:4px;}
+.edu-card .edu-sub{font-size:13px; color:var(--ink-1); margin-bottom:14px;}
+.edu-grade{font-family:var(--font-mono); font-size:22px; color:var(--accent); font-weight:600;}
+.edu-grade-lbl{font-size:11.5px; color:var(--ink-2); margin-top:2px;}
+.edu-div{height:1px; background:var(--line); margin:18px 0;}
+.edu-note{font-size:12.5px; color:var(--ink-2); font-family:var(--font-mono); line-height:1.6;}
 
-/* ---------- experience timeline ---------- */
-.timeline{position:relative; padding-left:32px; border-left:1px solid var(--line);}
-.tl-item{position:relative; padding-bottom:52px;}
+/* ---------- timeline (experience) ---------- */
+.timeline{position:relative; padding-left:30px; border-left:1px solid var(--line);}
+.tl-item{position:relative; padding-bottom:48px;}
 .tl-item:last-child{padding-bottom:0;}
-.tl-dot{
-  position:absolute; left:-38px; top:4px; width:14px; height:14px; border-radius:50%;
-  background:var(--bg-1); border:2px solid var(--cyan);
-  box-shadow:0 0 0 4px rgba(94,225,216,0.08);
-}
-.tl-item.past .tl-dot{border-color:var(--ink-2); box-shadow:0 0 0 4px rgba(120,140,165,0.06);}
-.tl-card{padding:28px 30px;}
-.tl-top{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:6px;}
-.tl-role{font-family:var(--font-display); font-size:19px; font-weight:600;}
-.tl-time{font-family:var(--font-mono); font-size:12px; color:var(--cyan);}
-.tl-org{font-size:14px; color:var(--ink-1); margin-bottom:18px; display:flex; align-items:center; gap:8px;}
+.tl-dot{position:absolute; left:-36px; top:5px; width:14px; height:14px; border-radius:50%; background:var(--bg-1); border:2px solid var(--accent); box-shadow:0 0 0 4px var(--accent-soft);}
+.tl-card{padding:26px 28px;}
+.tl-top{display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:4px;}
+.tl-role{font-family:var(--font-display); font-size:20px; font-weight:700;}
+.tl-time{font-family:var(--font-mono); font-size:11.5px; color:var(--accent);}
+.tl-org{font-size:13.5px; color:var(--ink-1); margin-bottom:8px; display:flex; align-items:center; gap:8px;}
 .tl-org .sep{width:3px; height:3px; border-radius:50%; background:var(--ink-2);}
-.tl-list{list-style:none; display:flex; flex-direction:column; gap:11px;}
-.tl-list li{
-  font-size:14px; line-height:1.7; color:var(--ink-1); padding-left:18px; position:relative;
-}
-.tl-list li::before{
-  content:''; position:absolute; left:0; top:9px; width:6px; height:6px;
-  background:var(--cyan); border-radius:2px; opacity:0.7; transform:rotate(45deg);
-}
+.tl-intro{font-size:14px; color:var(--ink-1); line-height:1.7; margin-bottom:18px;}
+.tl-list{list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:14px;}
+.tl-list li{font-size:13.5px; color:var(--ink-1); line-height:1.65;}
 .tl-list li b{color:var(--ink-0); font-weight:600;}
 
-/* ---------- skills ---------- */
-.skill-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
-@media (max-width:760px){.skill-grid{grid-template-columns:1fr;}}
-.skill-card{padding:24px 26px;}
-.skill-card h4{
-  font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.04em; color:var(--amber);
-  margin-bottom:14px; display:flex; align-items:center; gap:9px;
-}
-.skill-card h4::before{content:''; width:7px; height:7px; background:var(--amber); border-radius:2px; display:inline-block;}
+/* expandable achievement cards inside timeline */
+.achv-grid{display:flex; flex-direction:column; gap:10px; margin-top:16px;}
+.achv{border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; background:rgba(255,255,255,0.02);}
+.achv-head{display:flex; align-items:center; justify-content:space-between; gap:14px; padding:15px 18px; cursor:pointer;}
+.achv-head h5{font-family:var(--font-body); font-weight:600; font-size:14.5px;}
+.achv-head p{font-size:12.5px; color:var(--ink-2); margin-top:3px; font-weight:400;}
+.achv-toggle{font-family:var(--font-mono); font-size:11px; color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:5px;}
+.achv-toggle svg{width:11px; height:11px; transition:transform .3s ease;}
+.achv.open .achv-toggle svg{transform:rotate(180deg);}
+.achv-body{max-height:0; overflow:hidden; transition:max-height .4s ease;}
+.achv.open .achv-body{max-height:400px;}
+.achv-inner{padding:0 18px 18px; font-size:13px; color:var(--ink-1); line-height:1.7;}
+.achv-inner .chal-lbl, .achv-inner .app-lbl{font-family:var(--font-mono); font-size:10.5px; color:var(--accent); letter-spacing:0.05em; margin-top:10px; margin-bottom:4px; display:block;}
+.achv-inner .chal-lbl{margin-top:0;}
+
 .chip-row{display:flex; gap:8px; flex-wrap:wrap;}
-.chip{
-  font-size:12.5px; color:var(--ink-1); background:rgba(255,255,255,0.03);
-  border:1px solid var(--line); padding:6px 12px; border-radius:9px;
-  transition:border-color .2s ease, color .2s ease, background .2s ease;
-}
-.chip:hover{border-color:rgba(94,225,216,0.35); color:var(--ink-0); background:var(--cyan-soft);}
+.chip{font-size:12px; color:var(--ink-1); background:rgba(255,255,255,0.03); border:1px solid var(--line); padding:6px 12px; border-radius:9px; transition:border-color .2s ease, color .2s ease, background .2s ease;}
+.chip:hover{border-color:var(--accent); color:var(--ink-0); background:var(--accent-soft);}
 
-/* ---------- achievements ---------- */
+/* ---------- tech / research card grids ---------- */
+.deep-card{padding:0; overflow:hidden;}
+.deep-head{display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding:26px 28px; cursor:pointer;}
+.deep-head-left{display:flex; gap:16px; align-items:flex-start;}
+.deep-icon{width:44px; height:44px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(155deg, var(--accent-soft), transparent); border:1px solid var(--glass-border);}
+.deep-icon svg{width:21px; height:21px; color:var(--accent);}
+.deep-head h3{font-family:var(--font-display); font-size:21px; font-weight:700; margin-bottom:5px;}
+.deep-head .deep-sub{font-size:13.5px; color:var(--ink-1); line-height:1.6; max-width:520px;}
+.deep-toggle{font-family:var(--font-mono); font-size:11px; color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:6px; padding-top:4px;}
+.deep-toggle svg{width:12px; height:12px; transition:transform .3s ease;}
+.deep-card.open .deep-toggle svg{transform:rotate(180deg);}
+.deep-body{max-height:0; overflow:hidden; transition:max-height .5s ease;}
+.deep-card.open .deep-body{max-height:2200px;}
+.deep-inner{padding:0 28px 30px;}
+.deep-inner .divider{height:1px; background:var(--line); margin:0 0 22px;}
+
+.greek-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:20px;}
+@media (max-width:700px){.greek-grid{grid-template-columns:1fr;}}
+.greek-item{padding:16px 18px; border:1px solid var(--line); border-radius:var(--radius-sm); background:rgba(255,255,255,0.02);}
+.greek-item .g-sym{font-family:var(--font-display); font-size:22px; color:var(--accent); font-weight:700; margin-bottom:4px;}
+.greek-item .g-name{font-family:var(--font-mono); font-size:11px; color:var(--ink-2); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:8px;}
+.greek-item p{font-size:13px; color:var(--ink-1); line-height:1.65;}
+.deep-inner .why-it-matters{font-size:13.5px; color:var(--ink-1); line-height:1.75; padding:16px 18px; border-left:2px solid var(--accent); background:var(--accent-soft); border-radius:0 var(--radius-sm) var(--radius-sm) 0; margin-bottom:20px;}
+.deep-inner .why-it-matters b{color:var(--ink-0);}
+
+/* research strategy cards */
+.freq-label{display:flex; align-items:center; gap:12px; margin:8px 0 22px;}
+.freq-label h3{font-family:var(--font-display); font-size:23px; font-weight:700;}
+.freq-badge{font-family:var(--font-mono); font-size:11px; color:var(--accent); background:var(--accent-soft); border:1px solid var(--glass-border); padding:5px 12px; border-radius:100px;}
+.strat-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px; margin-bottom:56px;}
+@media (max-width:840px){.strat-grid{grid-template-columns:1fr;}}
+.strat-grid:last-of-type{margin-bottom:0;}
+.strat-card{padding:26px;}
+.strat-card h4{font-family:var(--font-display); font-size:18px; font-weight:700; margin-bottom:10px;}
+.strat-card .concept{font-size:13.5px; color:var(--ink-1); line-height:1.7; margin-bottom:14px;}
+.strat-card .behavior-lbl{font-family:var(--font-mono); font-size:10.5px; color:var(--accent); letter-spacing:0.05em; margin-bottom:6px; display:block;}
+.strat-card .behavior{font-size:13px; color:var(--ink-1); line-height:1.7;}
+.strat-card .behavior b{color:var(--ink-0);}
+
+/* ---------- toolkit ---------- */
+.skill-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+@media (max-width:920px){.skill-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.skill-grid{grid-template-columns:1fr;}}
+.skill-card{padding:22px 24px;}
+.skill-card h4{font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em; color:var(--accent); margin-bottom:13px; display:flex; align-items:center; gap:9px;}
+.skill-card h4::before{content:''; width:7px; height:7px; background:var(--accent); border-radius:2px; display:inline-block;}
+
+/* ---------- recognition ---------- */
 .ach-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
-@media (max-width:840px){.ach-grid{grid-template-columns:1fr;}}
-.ach-card{padding:26px; display:flex; flex-direction:column; gap:14px;}
-.ach-icon{
-  width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(155deg, rgba(232,179,104,0.22), rgba(232,179,104,0.05));
-  border:1px solid rgba(232,179,104,0.28);
-}
-.ach-icon svg{width:20px; height:20px; color:var(--amber);}
-.ach-card h4{font-family:var(--font-display); font-size:16px; font-weight:600;}
-.ach-card .ach-when{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-2);}
-.ach-card p{font-size:13.5px; line-height:1.65; color:var(--ink-1);}
+@media (max-width:900px){.ach-grid{grid-template-columns:1fr;}}
+.ach-card{padding:0; overflow:hidden;}
+.ach-head{padding:24px 24px 20px; cursor:pointer;}
+.ach-badge{display:inline-block; font-family:var(--font-mono); font-size:11px; color:var(--accent); background:var(--accent-soft); border:1px solid var(--glass-border); padding:4px 11px; border-radius:100px; margin-bottom:14px;}
+.ach-card h4{font-family:var(--font-display); font-size:18px; font-weight:700; margin-bottom:4px;}
+.ach-card .ach-when{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-2); margin-bottom:10px;}
+.ach-card .ach-teaser{font-size:13px; color:var(--ink-1); line-height:1.6;}
+.ach-more-toggle{font-family:var(--font-mono); font-size:11px; color:var(--accent); display:flex; align-items:center; gap:5px; margin-top:12px;}
+.ach-more-toggle svg{width:11px; height:11px; transition:transform .3s ease;}
+.ach-card.open .ach-more-toggle svg{transform:rotate(180deg);}
+.ach-body{max-height:0; overflow:hidden; transition:max-height .4s ease;}
+.ach-card.open .ach-body{max-height:300px;}
+.ach-inner{padding:0 24px 24px; font-size:13px; color:var(--ink-1); line-height:1.7;}
 
-/* ---------- education ---------- */
-.edu-row{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; padding:30px 32px;}
-.edu-left{display:flex; align-items:center; gap:18px;}
-.edu-icon{
-  width:52px; height:52px; border-radius:14px; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(155deg, var(--cyan-soft), transparent);
-  border:1px solid rgba(94,225,216,0.28);
-}
-.edu-icon svg{width:24px; height:24px; color:var(--cyan);}
-.edu-name{font-family:var(--font-display); font-size:18px; font-weight:600;}
-.edu-degree{font-size:13.5px; color:var(--ink-1); margin-top:3px;}
-.edu-right{text-align:right; font-family:var(--font-mono); font-size:12.5px; color:var(--ink-2);}
-.edu-right .grade{color:var(--cyan); font-size:15px; font-weight:600; display:block; margin-bottom:4px;}
-
-/* ---------- contact / footer ---------- */
-.contact-wrap{padding:70px 32px; text-align:center; position:relative; overflow:hidden;}
-.contact-wrap h2{
-  font-family:var(--font-display); font-size:clamp(28px,4vw,42px); font-weight:700; letter-spacing:-0.01em; margin-bottom:16px;
-}
+/* ---------- contact ---------- */
+.contact-wrap{padding:64px 32px; text-align:center; position:relative;}
+.contact-wrap h2{font-family:var(--font-display); font-size:clamp(28px,4vw,42px); font-weight:700; margin-bottom:14px;}
 .contact-wrap p{color:var(--ink-1); font-size:15px; max-width:480px; margin:0 auto 30px; line-height:1.7;}
-.contact-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:36px;}
-.contact-links{display:flex; gap:26px; justify-content:center; flex-wrap:wrap;}
-.contact-links a{
-  display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2); font-family:var(--font-mono);
-  transition:color .2s ease;
-}
-.contact-links a:hover{color:var(--cyan);}
+.contact-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:34px;}
+.contact-links{display:flex; gap:24px; justify-content:center; flex-wrap:wrap;}
+.contact-links a{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2); font-family:var(--font-mono); transition:color .2s ease;}
+.contact-links a:hover{color:var(--accent);}
 .contact-links svg{width:15px; height:15px;}
-footer{
-  text-align:center; padding:26px; font-size:12px; color:var(--ink-2);
-  border-top:1px solid var(--line); font-family:var(--font-mono);
-}
+footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); border-top:1px solid var(--line); font-family:var(--font-mono);}
 
-@media (prefers-reduced-motion: reduce){
-  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
-}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}}
 </style>
 </head>
 <body>
@@ -374,17 +369,26 @@ footer{
     Vishal Mishra
   </div>
   <div class="nav-links">
-    <a href="#research">Research</a>
+    <a href="#about">About</a>
     <a href="#experience">Experience</a>
-    <a href="#skills">Skills</a>
-    <a href="#achievements">Achievements</a>
+    <a href="#tech">Tech</a>
+    <a href="#research">Research</a>
+    <a href="#toolkit">Toolkit</a>
+    <a href="#recognition">Recognition</a>
     <a href="#contact">Contact</a>
   </div>
-  <div class="nav-cta">
-    <a class="btn btn-primary" href="mailto:vishal214.mishra@gmail.com">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
-      Get in touch
-    </a>
+  <div class="nav-right">
+    <label class="theme-toggle" title="Toggle God / Demon theme">
+      <input type="checkbox" id="themeSwitch">
+      <span class="toggle-track">
+        <svg class="toggle-icon-static sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="toggle-icon-static moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.5A8.5 8.5 0 1 1 11.5 3a7 7 0 0 0 9.5 9.5z"/></svg>
+        <span class="toggle-thumb">
+          <svg class="god-only" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.5 4.5H18l-3.7 2.7 1.4 4.5L12 11l-3.7 2.7 1.4-4.5L6 6.5h4.5z"/></svg>
+          <svg class="demon-only" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-2 3-2 5-1 7-2-1-3-.5-4 1 1 0 2 .5 2 2-3 0-5 2-5 5 2-1 3-1 4 0-1 2 0 4 2 5-1-2 0-3 2-3s3 1 2 3c2-1 3-3 2-5 1-1 2-1 4 0 0-3-2-5-5-5 0-1.5 1-2 2-2-1-1.5-2-2-4-1 1-2 1-4-1z"/></svg>
+        </span>
+      </span>
+    </label>
   </div>
 </nav>
 
@@ -394,161 +398,80 @@ footer{
   <section class="hero">
     <div class="hero-grid">
       <div>
-        <div class="eyebrow"><span class="dot"></span> Available for research &amp; quant engineering roles</div>
+        <div class="eyebrow"><span class="dot"></span> Available for quant research &amp; trading-systems roles</div>
         <h1>
-          Quantitative Researcher
-          <span class="line2">&amp; low-latency systems engineer, Mumbai</span>
+          Quantitative Developer &amp; Researcher
+          <span class="role-line">Quantitative Associate, Vikabh Securities · Mumbai</span>
         </h1>
         <p class="hero-desc">
-          I build the math and the machinery behind systematic trading — <b>volatility models, options analytics, and econophysics-driven research</b>, shipped as production-grade <b>C++/Python/React</b> platforms handling multicast tick data, order-book microstructure, and live derivatives execution across Indian markets.
+          I build the <b>Greeks mathematics, order-flow signals, and low-latency C++/Python systems</b> behind systematic options and derivatives trading — from the exchange's raw multicast feed, to the model that reads it, to the dashboard a trader actually watches.
         </p>
+        <ul class="hero-bullets">
+          <li>Rebuilt multicast order-book pipelines in C++ on lock-free, core-pinned infrastructure</li>
+          <li>Designed Greeks-aware options structures and microstructure-based order-flow signals</li>
+          <li>Top 150 globally — Akuna Capital Options 201 · 1st Runner-Up — AMD×SPRINT Hackathon · Top 3 of 38,000+ — Google GenAI Hackathon</li>
+        </ul>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#research">
+          <a class="btn btn-primary" href="#tech">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-            View research &amp; projects
+            View tech systems
           </a>
-          <a class="btn btn-ghost" href="#experience">Engineering experience</a>
-        </div>
-        <div class="hero-meta">
-          <a href="mailto:vishal214.mishra@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>vishal214.mishra@gmail.com</a>
-          <a href="tel:+917000107054"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.3 1.79.54 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.11a2 2 0 0 1 2.11-.45c.86.24 1.75.42 2.65.54A2 2 0 0 1 22 16.92z"/></svg>+91 70001 07054</a>
-          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18v-6a3 3 0 0 1 3-3h0a3 3 0 0 1 3 3v6"/><path d="M2 12l10-8 10 8"/></svg>Mumbai, India</a>
+          <a class="btn btn-ghost" href="#research">View research</a>
         </div>
       </div>
 
-      <div class="term-card glass">
-        <div class="term-head">
-          <div class="term-dots"><span></span><span></span><span></span></div>
-          <div class="term-label">quant_desk // profile.log</div>
+      <div class="hero-card glass">
+        <div class="hc-head">
+          <div class="hc-dots"><span></span><span></span><span></span></div>
+          <div class="hc-label"><span class="god-only">sacred_ledger // profile</span><span class="demon-only">infernal_ledger // profile</span></div>
         </div>
-        <div class="term-body">
-          <div><span class="prompt">&gt;</span> <span class="k">role</span> <span class="v">Quantitative Associate</span></div>
-          <div><span class="prompt">&gt;</span> <span class="k">desk</span> <span class="v">Vikabh Securities · Derivatives</span></div>
-          <div><span class="prompt">&gt;</span> <span class="k">stack</span> <span class="c">C++17</span> · <span class="c">Python</span> · <span class="c">React</span> · <span class="c">QuestDB</span></div>
-          <div class="term-divider"></div>
-          <div><span class="prompt">&gt;</span> <span class="k">tick_pipeline</span> <span class="a">508B</span> binary snapshots</div>
-          <div><span class="prompt">&gt;</span> <span class="k">storage_gain</span> <span class="a">~10–15×</span> vs JSON</div>
-          <div><span class="prompt">&gt;</span> <span class="k">iv_model_mse</span> <span class="a">7.15e-05</span> (NIFTY50)</div>
-          <div><span class="prompt">&gt;</span> <span class="k">order_pool</span> <span class="a">5,000,000</span> slots · O(1) lookup</div>
-          <div class="term-divider"></div>
-          <svg class="spark" viewBox="0 0 300 60" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#5ee1d8" stop-opacity="0.35"/>
-                <stop offset="100%" stop-color="#5ee1d8" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <path class="fill" d="M0,40 L20,36 L40,42 L60,28 L80,32 L100,18 L120,24 L140,14 L160,20 L180,10 L200,16 L220,8 L240,12 L260,4 L280,10 L300,2 L300,60 L0,60 Z"/>
-            <path d="M0,40 L20,36 L40,42 L60,28 L80,32 L100,18 L120,24 L140,14 L160,20 L180,10 L200,16 L220,8 L240,12 L260,4 L280,10 L300,2"/>
-          </svg>
+        <div class="hc-body">
+          <div><span class="prompt">›</span> <span class="k">role</span> <span class="v">Quantitative Associate</span></div>
+          <div><span class="prompt">›</span> <span class="k">desk</span> <span class="v">Vikabh Securities · Derivatives</span></div>
+          <div><span class="prompt">›</span> <span class="k">stack</span> <span class="c">C++17</span> · <span class="c">Python</span> · <span class="c">React</span> · <span class="c">QuestDB</span></div>
+          <div class="hc-div"></div>
+          <div><span class="prompt">›</span> <span class="k">order_pool</span> <span class="v">5,000,000 slots · O(1) lookup</span></div>
+          <div><span class="prompt">›</span> <span class="k">tick_storage</span> <span class="v">~10–15× smaller than JSON</span></div>
+          <div><span class="prompt">›</span> <span class="k">library</span> <span class="v">QuantResearch v2.5 · PyPI</span></div>
+          <div><span class="prompt">›</span> <span class="k">signals</span> <span class="v">OBI · order-flow · Greeks-aware structuring</span></div>
         </div>
       </div>
     </div>
 
     <div class="stat-strip">
-      <div class="stat"><div class="num"><span>18+</span></div><div class="lbl">Technical indicators shipped in QuantResearch library</div></div>
-      <div class="stat"><div class="num"><span>10–15×</span></div><div class="lbl">Tick-storage compression vs raw JSON</div></div>
       <div class="stat"><div class="num"><span>Top 150</span></div><div class="lbl">Globally — Akuna Capital Options 201, 2025</div></div>
-      <div class="stat"><div class="num"><span>38,000+</span></div><div class="lbl">Competitors outranked — Google GenAI Hackathon</div></div>
+      <div class="stat"><div class="num"><span>10–15×</span></div><div class="lbl">Tick-storage compression vs. raw JSON</div></div>
+      <div class="stat"><div class="num"><span>18+</span></div><div class="lbl">Indicators shipped in the QuantResearch library</div></div>
+      <div class="stat"><div class="num"><span>5M</span></div><div class="lbl">Preallocated order-pool slots, O(1) lookup</div></div>
     </div>
   </section>
 
-  <!-- ============ RESEARCH ============ -->
-  <section id="research">
+  <!-- ============ ABOUT ============ -->
+  <section id="about">
     <div class="section-head">
       <span class="section-index">01</span>
-      <span class="section-title">Research &amp; Quantitative Work</span>
-      <span class="section-sub">Volatility modeling, econophysics, and open-source tooling for systematic research</span>
+      <span class="section-title">About</span>
+      <span class="section-sub">From raw exchange feed to the Greeks that price every structure sitting on top of it</span>
     </div>
-
-    <div class="card-grid">
-      <div class="proj-card glass">
-        <div class="proj-top">
-          <span class="proj-tag">Open source · PyPI</span>
-          <span class="proj-date">Nov 2025 — present</span>
-        </div>
-        <h3>QuantResearch — v2.5</h3>
-        <p>
-          A full-stack quantitative analysis library built around <b>QuantQL</b>, a compiled domain-specific language for strategy scripting — indicator-based entry/exit logic, stop-loss/take-profit rules, commission and slippage modeling, and automated equity-curve reporting.
-        </p>
-        <div class="proj-metrics">
-          <span class="metric-chip">18+ indicators</span>
-          <span class="metric-chip">Sharpe / Sortino / Calmar / VaR / CVaR</span>
-          <span class="metric-chip">NSE · BSE · US · Crypto feeds</span>
-        </div>
-        <div class="proj-stack">
-          <span class="stack-chip">Python</span><span class="stack-chip">PyPI</span><span class="stack-chip">WebSocket</span><span class="stack-chip">Git</span>
-        </div>
+    <div class="about-grid">
+      <div class="about-body">
+        <p>I'm a <b>quantitative developer and researcher</b> who owns the full loop — from the exchange's raw multicast tick, to the order-flow and volatility signal computed on it, to the options structure whose Greeks decide how much risk that signal is allowed to take.</p>
+        <p>My work sits where <b>market microstructure meets options mathematics</b>: reading order-book imbalance and liquidity flow on one side, and building Greeks-aware, premium-normalized structures — Iron Condors, Broken-Wing Butterflies, ratio spreads — on the other. Both run on production-grade C++ and Python infrastructure I built end to end, not a research notebook bolted onto someone else's system.</p>
+        <p>I publish some of that research as open-source software — <b>QuantResearch</b> on PyPI — and keep every backtest honest with walk-forward validation and realistic transaction costs before it ever sees live capital.</p>
+        <ul class="focus-list">
+          <li>Order-book microstructure, order-flow &amp; liquidity-imbalance signals</li>
+          <li>Options Greeks, IV surfaces &amp; premium-normalized structuring</li>
+          <li>Regime-aware strategy design: trend vs. range, adaptive risk by DTE</li>
+          <li>Low-latency C++ systems, lock-free data structures, production safety</li>
+        </ul>
       </div>
-
-      <div class="proj-card glass">
-        <div class="proj-top">
-          <span class="proj-tag">Kaggle competition</span>
-          <span class="proj-date">Jun 2025 — Jul 2025</span>
-        </div>
-        <h3>Volatility Curve Prediction</h3>
-        <p>
-          A quadratic Huber-regression pipeline for implied-volatility surface prediction across moneyness and tenor, engineered with <b>40+ derivative-based features</b> — delta-adjusted ratios, vega exposures, gamma surfaces — tuned via systematic hyperparameter search and k-fold cross-validation.
-        </p>
-        <div class="proj-metrics">
-          <span class="metric-chip">MSE 7.15 × 10⁻⁵</span>
-          <span class="metric-chip">Beat threshold of 7.89 × 10⁻⁵</span>
-        </div>
-        <div class="proj-stack">
-          <span class="stack-chip">Python</span><span class="stack-chip">Pandas</span><span class="stack-chip">Scikit-learn</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-head" style="margin-top:64px;">
-      <span class="section-index">01.1</span>
-      <span class="section-title" style="font-size:22px;">Strategy Design, Greeks Analytics &amp; HFT Signals</span>
-    </div>
-
-    <div class="card-grid">
-      <div class="proj-card glass">
-        <div class="proj-top">
-          <span class="proj-tag">Options structuring</span>
-        </div>
-        <h3>Customized options strategies</h3>
-        <p>
-          Structured and backtested <b>Iron Condors, Broken Wing Butterflies, and ratio spreads</b> as premium-fraction plays rather than fixed templates — each strategy's strikes, wing widths, and sizing adapt to the prevailing IV regime.
-        </p>
-        <div class="proj-metrics">
-          <span class="metric-chip">DTE-adaptive stoploss scaling</span>
-          <span class="metric-chip">Premium-fraction sizing</span>
-          <span class="metric-chip">3yr walk-forward validation</span>
-        </div>
-      </div>
-
-      <div class="proj-card glass">
-        <div class="proj-top">
-          <span class="proj-tag">Risk analytics</span>
-        </div>
-        <h3>Greeks-driven risk overlays</h3>
-        <p>
-          Every structure is monitored and re-sized against live <b>Delta, Gamma, Theta, and Vega</b> exposure — synthetic-ATM option chains and Greeks matrices render in real time, and post-trade Greek attribution explains exactly which exposure drove each day's P&amp;L.
-        </p>
-        <div class="proj-metrics">
-          <span class="metric-chip">Real-time Greeks matrices</span>
-          <span class="metric-chip">Post-trade attribution</span>
-          <span class="metric-chip">IV skew heatmaps</span>
-        </div>
-      </div>
-
-      <div class="proj-card glass">
-        <div class="proj-top">
-          <span class="proj-tag">Microstructure · HFT</span>
-        </div>
-        <h3>Trend detection from order-book microstructure</h3>
-        <p>
-          Built high-frequency signals directly off the multicast order book — <b>order-book imbalance (OBI)</b> and liquidity-dominance metrics — to detect short-horizon directional trend before it shows up in price, feeding it into wavelet (SWT/MRA) and spectral (Welch PSD, STFT) regime detection for volatility-state-aware entries.
-        </p>
-        <div class="proj-metrics">
-          <span class="metric-chip">Order-book imbalance</span>
-          <span class="metric-chip">Liquidity dominance</span>
-          <span class="metric-chip">Wavelet / spectral regime detection</span>
-        </div>
+      <div class="edu-card glass">
+        <h4>B.E., Computer Engineering</h4>
+        <div class="edu-sub">Mumbai University</div>
+        <div class="edu-grade">7.75<span style="font-size:14px;color:var(--ink-2);"> / 10</span></div>
+        <div class="edu-grade-lbl">CGPA · Nov 2021 – Jun 2025</div>
+        <div class="edu-div"></div>
+        <div class="edu-note">Applied focus: probability &amp; statistics, linear algebra, calculus, optimization — the mathematics underneath every model on this page.</div>
       </div>
     </div>
   </section>
@@ -557,8 +480,8 @@ footer{
   <section id="experience">
     <div class="section-head">
       <span class="section-index">02</span>
-      <span class="section-title">Engineering &amp; Development Experience</span>
-      <span class="section-sub">Turning research into production systems — from multicast feeds to live risk management</span>
+      <span class="section-title">Experience</span>
+      <span class="section-sub">What I built in each role — open a card for the challenge and how I approached it</span>
     </div>
 
     <div class="timeline">
@@ -566,151 +489,362 @@ footer{
       <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card glass">
-          <div class="tl-top">
-            <span class="tl-role">Quantitative Associate</span>
-            <span class="tl-time">Dec 2025 — Current</span>
-          </div>
+          <div class="tl-top"><span class="tl-role">Quantitative Associate</span><span class="tl-time">Dec 2025 — Present</span></div>
           <div class="tl-org">Vikabh Securities <span class="sep"></span> Mumbai, India</div>
-          <ul class="tl-list">
-            <li>Architected an end-to-end, production <b>market-data &amp; backtesting platform</b> (React, FastAPI, QuestDB, Redis, DuckDB) across 15+ services — from raw exchange feed to live options/futures execution.</li>
-            <li>Built a three-tier <b>C++ multicast market-data pipeline</b> (LOB builder → binary logger → Python bridge) using a 5,000,000-slot preallocated order pool and O(1) hash-indexed lookups; 508-byte binary snapshots cut daily tick storage ~10–15× versus JSON (~1GB vs. 10–15GB per 2M ticks/day), with warm-up state recovery restoring full mathematical parity after mid-day restarts.</li>
-            <li>Designed a dual-node active-active <b>QuestDB/Redis data gateway</b> with automated failover (5-minute staleness watchdog) and NDJSON streaming, cutting API latency to near-zero via a Redis sorted-set cache, plus a DuckDB/Parquet historical engine with MD5-hashed query caching and dynamic OHLC time-bucketing (1m→60m).</li>
-            <li>Designed a <b>Smart-Netting OMS/RMS</b> over ZeroMQ pub/sub that nets sub-strategy signals into a single broker order — order slicing for exchange compliance, burst-queue batching, per-strategy risk guardrails, and an emergency square-off kill switch for instant closure.</li>
-            <li>Shipped a parallelized backtest suite spanning <b>econophysics-style energy models</b>, DTE-adaptive stoploss scaling, and premium-fraction options structuring (Iron Condor / BWB / ratio spreads); the portfolio module computes Sharpe/Sortino/skew/kurtosis and simulates Indian tax drag with high-water-mark tracking across rolling 3-year walk-forward tranches.</li>
-            <li>Applied <b>wavelet</b> (SWT/MRA — Daubechies-4, CWT — Complex Morlet) and <b>spectral</b> (Welch PSD, STFT) decomposition to options IV for volatility-regime detection, and delivered 6+ live dashboards (React, Recharts/Plotly) rendering synthetic-ATM option chains, Greeks matrices, and IV skew heatmaps in real time.</li>
-          </ul>
+          <p class="tl-intro">I research strategies and own the systems beneath them — from Greeks-aware options structuring to the low-latency C++ that reads the order book and the platform that turns all of it into something a trader can watch live.</p>
+
+          <div class="achv-grid">
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Market-data &amp; backtesting platform</h5><p>15+ services, raw feed to live execution</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Architected an end-to-end production platform (React, FastAPI, QuestDB, Redis, DuckDB) across 15+ services, taking systematic options/futures strategies from the raw exchange feed to live execution.
+                <span class="chal-lbl">The challenge</span>Research, live execution, and dashboards all need the same tick data — but no single service can serve all three without one slowing the others down.
+                <span class="app-lbl">How I approached it</span>Split the platform into layers: ingestion, a fast in-memory read layer, and a historical query layer — so live trading never waits on research, and research never reads stale data.
+              </div></div>
+            </div>
+
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Multicast market-data engine in C++</h5><p>5,000,000-slot order pool, O(1) lookups</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Built a three-tier C++ pipeline (LOB builder → binary logger → Python bridge) with a 5,000,000-slot preallocated order pool and O(1) hash-indexed lookups. 508-byte binary snapshots cut daily tick storage ~10–15× versus JSON, with warm-up state recovery restoring full parity after mid-day restarts.
+                <span class="chal-lbl">The challenge</span>JSON tick logs were too large to store a full day at tick resolution, and a restart mid-day lost the exact state of the order book.
+                <span class="app-lbl">How I approached it</span>Preallocate memory once, log in a compact binary format instead of JSON, and let the engine replay history on startup to rebuild the exact book before going live.
+              </div></div>
+            </div>
+
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Active-active data gateway</h5><p>Dual-node QuestDB/Redis, automated failover</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Designed a dual-node active-active QuestDB/Redis data gateway with a 5-minute staleness watchdog and NDJSON streaming, cutting API latency near-zero via a Redis sorted-set cache, plus a DuckDB/Parquet historical engine with hashed query caching and dynamic OHLC time-bucketing.
+                <span class="chal-lbl">The challenge</span>A single database node was a single point of failure, and dashboards needed instant "right now" data without heavy historical queries blocking it.
+                <span class="app-lbl">How I approached it</span>Run two database nodes in parallel with automatic failover, and put a Redis layer in front so live reads never touch the slower historical store.
+              </div></div>
+            </div>
+
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Smart-Netting OMS/RMS</h5><p>ZeroMQ pub/sub, single broker order per net signal</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Designed a Smart-Netting OMS/RMS over ZeroMQ pub/sub that nets sub-strategy signals into a single broker order — with order slicing for exchange compliance, burst-queue batching, per-strategy risk guardrails, a relational database as single source of truth, and an emergency square-off kill switch.
+                <span class="chal-lbl">The challenge</span>Running several sub-strategies on the same instrument meant they could send fully offsetting orders to the broker, wasting cost and risking exchange limits.
+                <span class="app-lbl">How I approached it</span>Net every sub-strategy's desired position first, send the broker only the difference, and give every strategy a guardrail plus one switch that can flatten everything instantly.
+              </div></div>
+            </div>
+
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Greeks-aware backtesting suite</h5><p>Econophysics models, DTE-adaptive risk, 3yr walk-forward</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Shipped a parallelized backtest suite spanning econophysics-style energy models, DTE-adaptive stoploss scaling, and premium-fraction options structuring (Iron Condor/BWB/ratio spreads); the portfolio module computes Sharpe/Sortino/skew/kurtosis and simulates Indian tax drag with high-water-mark tracking across rolling 3-year walk-forward tranches.
+                <span class="chal-lbl">The challenge</span>A strategy that looks good over one backtest window can be quietly relying on a single regime, or ignoring real costs and taxes.
+                <span class="app-lbl">How I approached it</span>Test every idea across rolling multi-year windows with real Indian tax drag built in, and attribute every trade's P&amp;L back to the specific Greek exposure that produced it.
+              </div></div>
+            </div>
+
+            <div class="achv" data-achv>
+              <div class="achv-head" onclick="toggleAchv(this)">
+                <div><h5>Options analytics dashboards</h5><p>Wavelet/spectral IV regime detection, live Greeks heatmaps</p></div>
+                <div class="achv-toggle">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              </div>
+              <div class="achv-body"><div class="achv-inner">
+                Applied wavelet (SWT/MRA — Daubechies-4, CWT — Complex Morlet) and spectral (Welch PSD, STFT) decomposition to options IV for volatility-regime detection, and delivered 6+ live dashboards (React, Recharts/Plotly) rendering synthetic-ATM option chains, Greeks matrices, and IV skew heatmaps in real time.
+                <span class="chal-lbl">The challenge</span>Volatility doesn't announce when it's changing regime, and a live Greeks book is hard to read from raw numbers alone.
+                <span class="app-lbl">How I approached it</span>Decompose the IV series with wavelet/spectral methods to catch regime changes early, and turn the Greeks book into live heatmaps a trader can read at a glance.
+              </div></div>
+            </div>
+          </div>
+
+          <div class="chip-row" style="margin-top:20px;">
+            <span class="chip">C++17</span><span class="chip">Python</span><span class="chip">React</span><span class="chip">FastAPI</span><span class="chip">Redis</span><span class="chip">QuestDB</span><span class="chip">DuckDB</span><span class="chip">ZeroMQ</span>
+          </div>
         </div>
       </div>
 
-      <div class="tl-item past">
+      <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card glass">
-          <div class="tl-top">
-            <span class="tl-role">Trainee Engineer</span>
-            <span class="tl-time">Jun 2025 — Nov 2025</span>
-          </div>
+          <div class="tl-top"><span class="tl-role">Trainee Engineer</span><span class="tl-time">Jun 2025 — Nov 2025</span></div>
           <div class="tl-org">Bixware Technologies <span class="sep"></span> Mumbai, India</div>
           <ul class="tl-list">
-            <li>Built <b>Azure Data Factory</b> pipelines with linked services to extract data from SAP into Azure Databricks for large-scale retail analytics.</li>
+            <li>Built <b>Azure Data Factory</b> pipelines with linked services, extracting SAP data into Azure Databricks for large-scale retail analytics.</li>
             <li>Automated ShopperStop &amp; Lifestyle data downloads with Python, significantly reducing manual intervention.</li>
-            <li>Built the scalable <b>Bix AI RAG Bot</b>: LangChain orchestration, vector-DB semantic embeddings, ChatGPT/Gemini LLMs — a 50% retrieval-latency reduction via caching and index optimization across 500+ document repositories.</li>
+            <li>Built the scalable <b>Bix AI RAG Bot</b> — LangChain orchestration, vector-DB semantic embeddings, ChatGPT/Gemini LLMs — a 50% retrieval-latency reduction via caching and index optimization across 500+ document repositories.</li>
           </ul>
+          <div class="chip-row">
+            <span class="chip">Azure Data Factory</span><span class="chip">Databricks</span><span class="chip">LangChain</span><span class="chip">VectorDB</span><span class="chip">Python</span>
+          </div>
         </div>
       </div>
 
-      <div class="tl-item past">
+      <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card glass">
-          <div class="tl-top">
-            <span class="tl-role">Implementation Engineer Intern</span>
-            <span class="tl-time">Jan 2025 — Mar 2025</span>
-          </div>
+          <div class="tl-top"><span class="tl-role">Implementation Engineer Intern</span><span class="tl-time">Jan 2025 — Mar 2025</span></div>
           <div class="tl-org">Engagely.ai <span class="sep"></span> Mumbai, India</div>
           <ul class="tl-list">
             <li>Optimized GenAI NLP intent-classification workflows and dynamic response routing — a 35% engagement uplift with 40% lower latency.</li>
-            <li>Developed a scalable WhatsApp bot on Flask APIs, boosting engagement by 35%.</li>
+            <li>Developed a scalable WhatsApp bot on Flask APIs.</li>
           </ul>
+          <div class="chip-row">
+            <span class="chip">Flask</span><span class="chip">NLP</span><span class="chip">REST APIs</span><span class="chip">GenAI</span>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- ============ SKILLS ============ -->
-  <section id="skills">
+  <!-- ============ TECH ============ -->
+  <section id="tech">
     <div class="section-head">
       <span class="section-index">03</span>
-      <span class="section-title">Technical Toolkit</span>
-      <span class="section-sub">Mathematics-first, systems-grade — the layers underneath every model</span>
+      <span class="section-title">Tech</span>
+      <span class="section-sub">The systems and dashboards that turn research into something a trader can watch and trust</span>
+    </div>
+    <p class="section-lede">Everything below runs live on the desk. Open any card — the first is the options-Greeks dashboard itself, explained the way a trader would read it; the rest are the infrastructure underneath it.</p>
+
+    <div class="deep-card glass open" data-deep>
+      <div class="deep-head" onclick="toggleDeep(this)">
+        <div class="deep-head-left">
+          <div class="deep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-5 3 3 5-7"/></svg></div>
+          <div>
+            <h3>Real-time Greeks &amp; IV Analytics Dashboard</h3>
+            <p class="deep-sub">Live Delta, Gamma, Theta and Vega across every leg of a strategy, alongside synthetic-ATM option chains and IV skew heatmaps — built so a trader sees not just P&amp;L, but why it moved.</p>
+          </div>
+        </div>
+        <div class="deep-toggle">Show breakdown <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+      </div>
+      <div class="deep-body"><div class="deep-inner">
+        <div class="divider"></div>
+        <div class="why-it-matters"><b>Why this exists:</b> a trader who only watches price is blind to <i>why</i> the P&amp;L moved. Watching all four Greeks together tells you whether today's move came from direction, acceleration of that direction, time decay, or a shift in the market's fear — and that decides whether to hold, hedge, or exit.</div>
+        <div class="greek-grid">
+          <div class="greek-item"><div class="g-sym">Δ</div><div class="g-name">Delta</div><p>How much an option's price moves for a ₹1 move in the underlying — effectively your directional exposure. Traders watch <b>net Delta</b> to know how long or short the book really is right now, not just on paper.</p></div>
+          <div class="greek-item"><div class="g-sym">Γ</div><div class="g-name">Gamma</div><p>How fast Delta itself changes as the underlying moves — the risk that a "safe" position suddenly isn't. High Gamma near expiry is why 0-DTE options can swing a book violently in minutes.</p></div>
+          <div class="greek-item"><div class="g-sym">Θ</div><div class="g-name">Theta</div><p>The daily cost — or income, if you're a seller — of time passing. It's the rent every option position pays or collects; premium-selling strategies live and die by Theta versus the other Greeks.</p></div>
+          <div class="greek-item"><div class="g-sym">ν</div><div class="g-name">Vega</div><p>Sensitivity to implied volatility itself, independent of direction. A position can lose money on a directionally correct call if IV crushes hard enough after the move.</p></div>
+        </div>
+        <div class="chip-row">
+          <span class="chip">Synthetic-ATM chain construction</span><span class="chip">Post-trade Greek attribution</span><span class="chip">IV skew heatmaps</span><span class="chip">Wavelet/spectral IV regime detection</span>
+        </div>
+      </div></div>
     </div>
 
-    <div class="skill-grid">
-      <div class="skill-card glass">
-        <h4>Quantitative finance</h4>
-        <div class="chip-row">
-          <span class="chip">Order-book microstructure</span><span class="chip">OBI &amp; liquidity dominance</span>
-          <span class="chip">Portfolio optimization (MPT, Kelly)</span><span class="chip">Volatility modeling</span>
-          <span class="chip">Garman-Klass</span><span class="chip">IV surfaces</span>
-          <span class="chip">Wavelet analysis (SWT/MRA, CWT)</span><span class="chip">Spectral methods (Welch PSD, STFT)</span>
-          <span class="chip">Econophysics</span><span class="chip">Greeks (Δ Γ Θ ν)</span>
-          <span class="chip">ARIMA / ATR</span><span class="chip">BWB · Iron Condor</span>
+    <div class="deep-card glass" data-deep style="margin-top:18px;">
+      <div class="deep-head" onclick="toggleDeep(this)">
+        <div class="deep-head-left">
+          <div class="deep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg></div>
+          <div>
+            <h3>Market-Data &amp; Execution Platform</h3>
+            <p class="deep-sub">The 15+ service platform — multicast C++ ingestion, active-active data gateway, and the Smart-Netting order/risk layer — that carries a signal from the exchange feed to a filled order.</p>
+          </div>
         </div>
+        <div class="deep-toggle">Show breakdown <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
-      <div class="skill-card glass">
-        <h4>Systems &amp; low-latency</h4>
+      <div class="deep-body"><div class="deep-inner">
+        <div class="divider"></div>
+        <p style="font-size:13.5px; color:var(--ink-1); line-height:1.75; margin-bottom:18px;">A trader trusts a signal only as far as they trust the plumbing beneath it. This platform rebuilds the exchange order book directly from raw multicast (not a third-party feed), keeps two database nodes running in parallel so a node failure never blackouts a screen, and nets every sub-strategy's orders before anything reaches the broker — so the same signal that fires on paper is the exact position that lands in the market, with nothing lost to latency, duplicate fills, or a stale cache.</p>
         <div class="chip-row">
-          <span class="chip">Lock-free SPSC queues</span><span class="chip">CPU core pinning</span>
-          <span class="chip">Preallocated memory pools</span><span class="chip">UDP multicast</span>
-          <span class="chip">ZeroMQ pub/sub · push/pull</span><span class="chip">WebSocket</span>
-          <span class="chip">Binary serialization</span><span class="chip">NDJSON streaming</span>
+          <span class="chip">C++ multicast LOB engine</span><span class="chip">5,000,000-slot order pool</span><span class="chip">Active-active QuestDB/Redis</span><span class="chip">Smart-Netting OMS/RMS</span><span class="chip">Emergency kill switch</span>
         </div>
+      </div></div>
+    </div>
+
+    <div class="deep-card glass" data-deep style="margin-top:18px;">
+      <div class="deep-head" onclick="toggleDeep(this)">
+        <div class="deep-head-left">
+          <div class="deep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <div>
+            <h3>API Gateway — Quantitative Endpoints &amp; Lifecycle</h3>
+            <p class="deep-sub">Beyond just moving data, the gateway does live quant math on the way out — plus the daemon that starts, stops and cleans up the whole system every trading day.</p>
+          </div>
+        </div>
+        <div class="deep-toggle">Show breakdown <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
-      <div class="skill-card glass">
-        <h4>Languages &amp; ML</h4>
+      <div class="deep-body"><div class="deep-inner">
+        <div class="divider"></div>
+        <p style="font-size:13.5px; color:var(--ink-1); line-height:1.75; margin-bottom:18px;">The active-active gateway above moves the data; this is what it does to the data on the way out, and how it keeps itself healthy across a trading day without anyone watching it.</p>
         <div class="chip-row">
-          <span class="chip">C++17</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Bash</span>
-          <span class="chip">Regression</span><span class="chip">Classification</span><span class="chip">Feature engineering</span><span class="chip">Hyperparameter tuning</span>
+          <span class="chip">Dynamic ATM calculation — live off the Synthetic Future price</span>
+          <span class="chip">Strategy Premium Builder — multi-leg forward-fill (e.g. a straddle)</span>
+          <span class="chip">Low-IV noise filtering — excludes broken deep-OTM quotes</span>
+          <span class="chip">Historical time-lock guard — blocks heavy queries in market hours</span>
+          <span class="chip">Autonomous daemon — 7am start · 4pm ingestion stop · 6pm cache wipe</span>
         </div>
+      </div></div>
+    </div>
+
+    <div class="deep-card glass" data-deep style="margin-top:18px;">
+      <div class="deep-head" onclick="toggleDeep(this)">
+        <div class="deep-head-left">
+          <div class="deep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V6a2 2 0 0 1 2-2h8l6 6v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 4v6h6"/></svg></div>
+          <div>
+            <h3>QuantResearch — Open-Source Backtesting Library</h3>
+            <p class="deep-sub">Published on PyPI (v2.5) — a compiled scripting language for strategies, 18+ technical indicators, and institutional risk metrics, so anyone can backtest an idea with the same rigor used on the desk.</p>
+          </div>
+        </div>
+        <div class="deep-toggle">Show breakdown <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
       </div>
-      <div class="skill-card glass">
-        <h4>Math, tools &amp; platforms</h4>
+      <div class="deep-body"><div class="deep-inner">
+        <div class="divider"></div>
+        <p style="font-size:13.5px; color:var(--ink-1); line-height:1.75; margin-bottom:18px;">Built around <b style="color:var(--ink-0);">QuantQL</b>, a compiled domain-specific language for strategy scripting — indicator-based entry/exit logic, stop-loss/take-profit, commission and slippage modeling, and automated equity-curve reporting. Covers NSE, BSE, US and crypto with live WebSocket streaming, and a 5-tab GUI dashboard for real-time charting.</p>
         <div class="chip-row">
-          <span class="chip">Probability &amp; statistics</span><span class="chip">Linear algebra</span><span class="chip">Calculus</span><span class="chip">Optimization</span>
-          <span class="chip">Flask</span><span class="chip">Streamlit</span><span class="chip">Docker</span><span class="chip">Databricks</span>
-          <span class="chip">Redis</span><span class="chip">QuestDB</span><span class="chip">Git</span><span class="chip">DSA · OS · Networks</span>
+          <span class="chip">18+ indicators (RSI, MACD, Ichimoku, ADX…)</span><span class="chip">Sharpe · Sortino · Calmar · VaR · CVaR</span><span class="chip">Multi-market data engine</span><span class="chip">Live WebSocket streaming</span>
         </div>
-      </div>
+      </div></div>
     </div>
   </section>
 
-  <!-- ============ ACHIEVEMENTS ============ -->
-  <section id="achievements">
+  <!-- ============ RESEARCH ============ -->
+  <section id="research">
     <div class="section-head">
       <span class="section-index">04</span>
-      <span class="section-title">Achievements</span>
-      <span class="section-sub">Recognition across trading, systems, and applied AI</span>
+      <span class="section-title">Research</span>
+      <span class="section-sub">How frequency, not just direction, decides which edge fits which market</span>
+    </div>
+    <p class="section-lede">Same underlying discipline — regime detection, adaptive risk — applied wherever the signal actually lives: from the shape of implied volatility across a session, down to the shape of the order book in microseconds. Described here in market terms, not in the underlying code.</p>
+
+    <div class="freq-label"><h3>Medium-Frequency Strategies</h3><span class="freq-badge">Holding period: minutes to full session</span></div>
+    <div class="strat-grid">
+      <div class="strat-card glass">
+        <h4>Momentum energy models</h4>
+        <p class="concept">An econophysics-style read on trend — price momentum treated like kinetic energy, and its distance from a fair-value anchor (VWAP/EMA) treated like potential energy, with exits triggered on the first signs of deceleration rather than a lagging crossover.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Performs best in <b>genuinely trending sessions</b> where a move keeps adding energy in the same direction, and gives back less on the way down by exiting as momentum fades instead of waiting for confirmation. Struggles in choppy, directionless sessions where price oscillates without ever building sustained momentum.</p>
+      </div>
+      <div class="strat-card glass">
+        <h4>VWAP-anchored trend signal</h4>
+        <p class="concept">Watches price velocity relative to VWAP, paired with a stop-loss that tightens automatically as days-to-expiry shrinks — because Theta and Gamma risk both rise sharply as expiry nears.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Suited to sessions building a <b>clear directional bias</b> through the day; risk naturally shrinks on expiry day and loosens further from expiry. Underperforms on quiet, low-realized-volatility days where price never moves far enough from VWAP to trigger a real signal.</p>
+      </div>
+      <div class="strat-card glass">
+        <h4>Premium-fraction options structuring</h4>
+        <p class="concept">Non-directional, Theta-harvesting structures — Iron Condor, Broken-Wing Butterfly, ratio spreads — where strikes are chosen by what fraction of the ATM premium they cost, not a fixed strike distance or fixed Delta.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Normalizes risk across calm and volatile days: on high-IV days the structure automatically widens, on low-IV days it tightens, keeping exposure comparable session to session. Profits from <b>range-bound, Theta-friendly</b> days; most exposed to sudden gaps or a sharp volatility expansion a static structure can't react to intraday.</p>
+      </div>
+      <div class="strat-card glass">
+        <h4>Rolling walk-forward validation</h4>
+        <p class="concept">Every medium-frequency idea above is tested across rolling multi-year tranches rather than one long backtest window, with realistic slippage, transaction costs, and Indian tax drag applied throughout.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Surfaces whether a strategy actually <b>survives distinct macro regimes</b> — a sharp crash, a grinding low-volatility year — instead of looking good only because one favorable period dominates the sample.</p>
+      </div>
     </div>
 
-    <div class="ach-grid">
-      <div class="ach-card glass">
-        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4.5L6 21l1.5-7.5L2 9h7z"/></svg></div>
-        <h4>Akuna Capital Options 201</h4>
-        <div class="ach-when">2025 · Selected Top 150 globally</div>
-        <p>Advanced through resume screen, online assessment, and interview. Focused on options pricing, volatility curves, market-making strategies, and the role of technology in trading.</p>
+    <div class="freq-label"><h3>High-Frequency Strategies</h3><span class="freq-badge">Holding period: seconds to a few minutes</span></div>
+    <div class="strat-grid">
+      <div class="strat-card glass">
+        <h4>Order-book imbalance &amp; liquidity dominance</h4>
+        <p class="concept">Measures the volume of large resting orders on the bid versus the ask across several rolling lookback windows, to read which side of the book genuine size is stacking on.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Markets tend to move toward where liquidity is being pulled or stacked, so this reads directional pressure <b>before it shows up in price</b>. Cross-checking resting size that persists for several ticks against one-tick flickers helps separate real institutional interest from spoofing; most reliable in liquid, actively-traded strikes and loses edge in thin, wide-spread contracts.</p>
       </div>
-      <div class="ach-card glass">
-        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-        <h4>AMD × SPRINT Hackathon</h4>
-        <div class="ach-when">2025 · 1st Runner-Up</div>
-        <p>Built a GPU-optimized LLM scheduler achieving 0.3-second inference latency.</p>
+      <div class="strat-card glass">
+        <h4>Order-flow confirmation on the tape</h4>
+        <p class="concept">A short-horizon signal built from actual traded buy/sell flow — not resting orders — requiring flow and price to agree on direction for a couple of consecutive bars before it commits.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Keeps the strategy out of moves where price drifts but nobody's actually pressing the trade — the kind of move that reverses just as fast. Performs well in <b>liquid, directionally-trending tape</b>; gets whipsawed in low-volume, indecisive periods where flow flips faster than price can confirm it.</p>
       </div>
-      <div class="ach-card glass">
-        <div class="ach-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
-        <h4>Google GenAI Hackathon</h4>
-        <div class="ach-when">2024 · Top 3 of 38,000+</div>
-        <p>Built Chikitsa — an AI-powered mental-health support platform.</p>
+      <div class="strat-card glass">
+        <h4>Microsecond execution layer</h4>
+        <p class="concept">The lock-free, core-pinned C++ path that acts on these signals — infrastructure, not a strategy in itself, but the layer that decides whether a genuine signal is actually captured.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">In HFT, being a few hundred microseconds slower than the rest of the market is functionally the same as being wrong, even when the signal was right. This layer determines <b>how much of a genuine edge is collected versus lost to latency</b>.</p>
+      </div>
+      <div class="strat-card glass">
+        <h4>Premium &amp; liquidity gatekeeping</h4>
+        <p class="concept">A guardrail that refuses entries when option premium falls below a minimum threshold, regardless of how strong the underlying signal looks.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Protects against Gamma risk and liquidity traps in deep out-of-the-money options near expiry, where the bid-ask spread can be <b>wider than the theoretical edge</b> the signal is chasing — a filter that costs a few trades to avoid the ones that would have lost regardless of direction.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ EDUCATION ============ -->
-  <section id="education">
+  <!-- ============ TOOLKIT ============ -->
+  <section id="toolkit">
     <div class="section-head">
       <span class="section-index">05</span>
-      <span class="section-title">Education</span>
-      <span class="section-sub"></span>
+      <span class="section-title">Toolkit</span>
+      <span class="section-sub">The instruments I reach for — from proofs to production</span>
     </div>
-    <div class="edu-row glass">
-      <div class="edu-left">
-        <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></div>
-        <div>
-          <div class="edu-name">Mumbai University</div>
-          <div class="edu-degree">Bachelor of Engineering, Computer Engineering</div>
-        </div>
+    <div class="skill-grid">
+      <div class="skill-card glass">
+        <h4>Languages</h4>
+        <div class="chip-row"><span class="chip">C++17</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Bash</span></div>
       </div>
-      <div class="edu-right">
-        <span class="grade">CGPA 7.75 / 10</span>
-        Nov 2021 — Jun 2025 · Mumbai, India
+      <div class="skill-card glass">
+        <h4>Quant &amp; math</h4>
+        <div class="chip-row"><span class="chip">Order-flow microstructure</span><span class="chip">Regime detection</span><span class="chip">IV surfaces &amp; skew</span><span class="chip">Wavelets (SWT/CWT)</span><span class="chip">Spectral (Welch/STFT)</span><span class="chip">Greeks Δ Γ Θ ν</span></div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Systems</h4>
+        <div class="chip-row"><span class="chip">Lock-free (SPSC)</span><span class="chip">Core pinning</span><span class="chip">Preallocated memory pools</span><span class="chip">UDP multicast</span><span class="chip">ZeroMQ</span><span class="chip">Binary serialization</span><span class="chip">NDJSON streaming</span></div>
+      </div>
+      <div class="skill-card glass">
+        <h4>ML &amp; data</h4>
+        <div class="chip-row"><span class="chip">Regression &amp; classification</span><span class="chip">Feature engineering</span><span class="chip">Hyperparameter tuning</span><span class="chip">NumPy / Pandas</span><span class="chip">DuckDB / QuestDB</span></div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Infra &amp; tools</h4>
+        <div class="chip-row"><span class="chip">Flask</span><span class="chip">Streamlit</span><span class="chip">Docker</span><span class="chip">Databricks</span><span class="chip">Redis</span><span class="chip">Git</span></div>
+      </div>
+      <div class="skill-card glass">
+        <h4>Risk &amp; derivatives</h4>
+        <div class="chip-row"><span class="chip">Iron Condor / BWB</span><span class="chip">Ratio spreads</span><span class="chip">ATR / Garman-Klass</span><span class="chip">Econophysics</span><span class="chip">VaR / CVaR</span><span class="chip">Walk-forward testing</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECOGNITION ============ -->
+  <section id="recognition">
+    <div class="section-head">
+      <span class="section-index">06</span>
+      <span class="section-title">Recognition</span>
+      <span class="section-sub">National and global competitions where I shipped working systems under a deadline</span>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card glass" data-ach>
+        <div class="ach-head" onclick="toggleAch(this)">
+          <span class="ach-badge">Top 150 · Global</span>
+          <h4>Akuna Capital Options 201</h4>
+          <div class="ach-when">2025</div>
+          <p class="ach-teaser">Selected globally after resume screen, online assessment and interview.</p>
+          <div class="ach-more-toggle">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="ach-body"><div class="ach-inner">Learned options pricing, volatility curves, market-making strategies, and the role of data and technology in modern trading — directly shaping how I approach Greeks-aware structuring today.</div></div>
+      </div>
+      <div class="ach-card glass" data-ach>
+        <div class="ach-head" onclick="toggleAch(this)">
+          <span class="ach-badge">1st Runner-Up</span>
+          <h4>AMD × SPRINT Hackathon</h4>
+          <div class="ach-when">2025</div>
+          <p class="ach-teaser">GPU-optimized LLM scheduler achieving 0.3-second latency.</p>
+          <div class="ach-more-toggle">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="ach-body"><div class="ach-inner">Designed and shipped a scheduling layer that keeps GPU-served LLM inference under a third of a second, under full hackathon time pressure.</div></div>
+      </div>
+      <div class="ach-card glass" data-ach>
+        <div class="ach-head" onclick="toggleAch(this)">
+          <span class="ach-badge">Top 3 of 38,000+</span>
+          <h4>Google GenAI Hackathon</h4>
+          <div class="ach-when">2024</div>
+          <p class="ach-teaser">Chikitsa — an AI mental-health support platform.</p>
+          <div class="ach-more-toggle">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="ach-body"><div class="ach-inner">Ranked in the top 3 nationally out of over 38,000 entrants, building a generative-AI assistant aimed at making mental-health guidance more accessible.</div></div>
       </div>
     </div>
   </section>
@@ -718,8 +852,8 @@ footer{
   <!-- ============ CONTACT ============ -->
   <section id="contact">
     <div class="contact-wrap glass">
-      <h2>Let's talk quant, systems, or both.</h2>
-      <p>Open to quantitative research, trading technology, and low-latency systems roles. Reach out — I usually reply within a day.</p>
+      <h2><span class="god-only">Let's build something worth trusting.</span><span class="demon-only">Let's build an edge.</span></h2>
+      <p>Hiring for a quant desk, or want to talk market microstructure, Greeks, or systems? Based in Mumbai, India — I reply fast.</p>
       <div class="contact-actions">
         <a class="btn btn-primary" href="mailto:vishal214.mishra@gmail.com">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>
@@ -731,16 +865,52 @@ footer{
         </a>
       </div>
       <div class="contact-links">
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
-        <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 15s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>CodeChef</a>
+        <a href="mailto:vishal213.mishra@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l9 7 9-7"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg>Alt. email</a>
+        <a href="https://www.linkedin.com/in/vishal-mishra-9b2a48208" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
+        <a href="https://github.com/vishalmishra369" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
+        <a href="https://www.youtube.com/@TheAlgorithmicForge" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.5 6.5s-.2-1.6-.9-2.3c-.8-.9-1.8-.9-2.2-1C16.4 3 12 3 12 3h0s-4.4 0-7.4.2c-.4.1-1.4.1-2.2 1-.7.7-.9 2.3-.9 2.3S1 8.4 1 10.2v1.6C1 13.6 1.3 15.5 1.3 15.5s.2 1.6.9 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.4.2 7.4.2s4.4 0 7.4-.2c.4 0 1.4-.1 2.2-1 .7-.7.9-2.3.9-2.3s.3-1.9.3-3.7v-1.6c0-1.8-.3-3.7-.3-3.7z"/><path d="M10 15V8.5l6 3.3z" fill="currentColor" stroke="none"/></svg>The Algorithmic Forge</a>
       </div>
     </div>
   </section>
 
 </main>
 
-<footer>Vishal Mishra — Quantitative Researcher &amp; Systems Engineer · Mumbai, India</footer>
+<footer>Vishal Mishra — Quantitative Developer &amp; Researcher · Mumbai, India · YouTube: The Algorithmic Forge</footer>
+
+<script>
+  function toggleDeep(headEl){
+    headEl.parentElement.classList.toggle('open');
+    const label = headEl.querySelector('.deep-toggle');
+    label.firstChild.textContent = headEl.parentElement.classList.contains('open') ? 'Hide breakdown ' : 'Show breakdown ';
+  }
+  function toggleAchv(headEl){
+    const card = headEl.parentElement;
+    card.classList.toggle('open');
+    const label = headEl.querySelector('.achv-toggle');
+    label.firstChild.textContent = card.classList.contains('open') ? 'Hide details ' : 'Show details ';
+  }
+  function toggleAch(headEl){
+    const card = headEl.parentElement;
+    card.classList.toggle('open');
+    const label = headEl.querySelector('.ach-more-toggle');
+    label.firstChild.textContent = card.classList.contains('open') ? 'Show less ' : 'Show more ';
+  }
+
+  // theme
+  const root = document.documentElement;
+  const themeSwitch = document.getElementById('themeSwitch');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    themeSwitch.checked = (t === 'demon');
+    try{ localStorage.setItem('vm-theme', t); }catch(e){}
+  }
+  let saved = 'god';
+  try{ saved = localStorage.getItem('vm-theme') || 'god'; }catch(e){}
+  applyTheme(saved);
+  themeSwitch.addEventListener('change', () => applyTheme(themeSwitch.checked ? 'demon' : 'god'));
+
+  // open first tech card by default (already has .open class in markup)
+</script>
 
 </body>
 </html>
