@@ -336,6 +336,14 @@ section{padding:92px clamp(18px,5vw,60px); max-width:1220px; margin:0 auto;}
 .strat-card .behavior-lbl{font-family:var(--font-mono); font-size:10.5px; color:var(--accent); letter-spacing:0.05em; margin-bottom:6px; display:block;}
 .strat-card .behavior{font-size:13px; color:var(--ink-1); line-height:1.7;}
 .strat-card .behavior b{color:var(--ink-0);}
+.evo-wrap{margin:6px 0 56px;}
+.evo-list{display:flex; flex-direction:column; gap:12px;}
+.evo-list .tech-note{margin-bottom:0;}
+.evo-num{font-family:var(--font-mono); font-size:11.5px; color:var(--accent); margin-right:10px; letter-spacing:0.04em;}
+.note-inner .evo-lbl{font-family:var(--font-mono); font-size:10.5px; color:var(--accent); letter-spacing:0.05em; display:block; margin:12px 0 4px;}
+.note-inner .evo-lbl:first-child{margin-top:0;}
+.note-inner .evo-txt{font-size:13.5px; color:var(--ink-1); line-height:1.75; margin:0;}
+.note-inner .evo-hood{font-size:13px; color:var(--ink-1); line-height:1.7; margin:0; padding:11px 14px; border-left:2px solid var(--accent-2); background:var(--accent-2-soft); border-radius:0 var(--radius-sm) var(--radius-sm) 0;}
 
 /* ---------- toolkit ---------- */
 .skill-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
@@ -371,6 +379,46 @@ section{padding:92px clamp(18px,5vw,60px); max-width:1220px; margin:0 auto;}
 .contact-links a:hover{color:var(--accent);}
 .contact-links svg{width:15px; height:15px;}
 footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); border-top:1px solid var(--line); font-family:var(--font-mono);}
+
+
+/* ---------- research journey side tab ---------- */
+.journey-tab{
+  position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:60;
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  padding:14px 9px; cursor:pointer; border:1px solid var(--glass-border); border-right:none;
+  border-radius:14px 0 0 14px;
+  background:linear-gradient(180deg, var(--glass-strong), var(--glass));
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:-6px 8px 24px -10px var(--shadow-b), inset 0 1px 0 rgba(255,255,255,0.2);
+  color:var(--accent); font-family:var(--font-body);
+  transition:padding .25s ease, box-shadow .25s ease, opacity .25s ease;
+}
+.journey-tab:hover{padding-right:14px; box-shadow:-8px 10px 30px -8px var(--shadow-b), inset 0 1px 0 rgba(255,255,255,0.3);}
+.journey-tab svg{width:20px; height:20px;}
+.journey-tab span{writing-mode:vertical-rl; font-size:11.5px; font-weight:700; letter-spacing:0.08em; color:var(--ink-1);}
+.journey-tab .bulb-glow{filter:drop-shadow(0 0 5px var(--accent-bright));}
+body.journey-open .journey-tab{opacity:0; pointer-events:none;}
+.journey-backdrop{position:fixed; inset:0; z-index:64; background:rgba(10,8,6,0.35); opacity:0; pointer-events:none; transition:opacity .3s ease;}
+body.journey-open .journey-backdrop{opacity:1; pointer-events:auto;}
+.journey-panel{
+  position:fixed; top:0; right:0; bottom:0; z-index:70; width:min(480px,94vw);
+  transform:translateX(105%); transition:transform .4s cubic-bezier(.2,.8,.3,1);
+  display:flex; flex-direction:column;
+  background:linear-gradient(160deg, var(--glass-strong), var(--bg-1));
+  border-left:1px solid var(--glass-border);
+  backdrop-filter:blur(24px) saturate(140%); -webkit-backdrop-filter:blur(24px) saturate(140%);
+  box-shadow:-20px 0 60px -20px var(--shadow-b);
+}
+body.journey-open .journey-panel{transform:translateX(0);}
+.jp-head{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; padding:22px 24px 16px; border-bottom:1px solid var(--line);}
+.jp-head h3{font-family:var(--font-display); font-size:21px; font-weight:800;}
+.jp-head p{font-size:12.5px; color:var(--ink-2); margin-top:4px;}
+.jp-close{width:34px; height:34px; border-radius:50%; border:1px solid var(--glass-border); background:var(--glass); color:var(--ink-1); cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:border-color .2s ease, color .2s ease;}
+.jp-close:hover{border-color:var(--accent); color:var(--accent);}
+.jp-close svg{width:14px; height:14px;}
+.jp-body{overflow-y:auto; padding:18px 24px 40px; flex:1;}
+.jp-body .jp-lede{font-size:13.5px; line-height:1.75; color:var(--ink-1); margin-bottom:18px;}
+@media (max-width:600px){.journey-tab{padding:11px 7px;} .journey-tab span{display:none;}}
 
 @media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}}
 </style>
@@ -770,7 +818,7 @@ footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); bord
       <span class="section-title">Research</span>
       <span class="section-sub">How frequency, not just direction, decides which edge fits which market</span>
     </div>
-    <p class="section-lede">Same underlying discipline — regime detection, adaptive risk — applied wherever the signal actually lives: from the shape of implied volatility across a session, down to the shape of the order book in microseconds. Described here in market terms, not in the underlying code.</p>
+    <p class="section-lede">Same underlying discipline — regime detection, adaptive risk — applied wherever the signal actually lives: from the shape of implied volatility across a session, down to the shape of the order book in microseconds. Described here in market terms, not in the underlying code. Open the Research Journey tab on the right edge to see how it evolved, then the strategies by frequency below.</p>
 
     <div class="freq-label"><h3>Medium-Frequency Strategies</h3><span class="freq-badge">Holding period: minutes to full session</span></div>
     <div class="strat-grid">
@@ -786,6 +834,7 @@ footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); bord
           </div>
           <div class="note-body"><div class="note-inner" style="padding-top:2px;">
             <p style="margin-bottom:0;">The exit condition specifically watches for deceleration — the rate at which momentum itself is slowing — rather than waiting for a moving-average crossover, which by construction lags the actual turn. In practice this can mean exiting a trade several bars before a classic crossover-based system would even register the reversal, at the cost of occasionally exiting into what turns out to be only a brief pause rather than a genuine top.</p>
+            <p style="margin-top:10px; margin-bottom:0;">This family grew out of a physics analogy — price as a system exchanging potential energy (distance from equilibrium) for kinetic energy (velocity) — applied to range-bound days. It was tested on March 2025 and did poorly, because that window was a one-directional panic-selling shock rather than a range. The lesson kept: separate “the model failed” from “the regime wasn't the one it was built for.”</p>
           </div></div>
         </div>
       </div>
@@ -831,6 +880,37 @@ footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); bord
           </div>
           <div class="note-body"><div class="note-inner" style="padding-top:2px;">
             <p style="margin-bottom:0;">Beyond the headline return, every tranche is also scored on higher-order moments — skew and kurtosis of the return distribution — because a strategy with excellent average returns but strongly negative skew is quietly building toward one large loss, which a Sharpe ratio alone won't reveal.</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="strat-card glass">
+        <h4>Velocity &amp; Runner — intraday trend</h4>
+        <p class="concept">Two intraday trend strategies that enter on the momentum strength of the option or asset being traded. Velocity takes profit at a target scaled to the index's ATM implied volatility; Runner drops the fixed target and the forced end-of-day exit to ride the whole move.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Velocity captures ordinary directional days cleanly, and its target breathes with real-time volatility instead of sitting at fixed points. Runner earns the most on <b>strong momentum days that run past the normal band</b>. Both lose on choppy days where the index oscillates inside its usual deviation band — which is exactly the gap the Energy research was started to close.</p>
+        <div class="tech-note" data-note style="margin-top:14px; margin-bottom:0;">
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4 style="font-size:13px;">Go deeper</h4></div>
+            <div class="note-toggle" data-show="Show more " data-hide="Hide more ">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner" style="padding-top:2px;">
+            <p style="margin-bottom:10px;">The stop is DTE-aware: it tightens as expiry approaches and loosens further out, because the same move means very different things to an option with six days left and one with hours left — theta and gamma risk are not constant across the cycle.</p>
+            <p style="margin-bottom:10px;">Runner's trade-off is deliberate: it gives up the certainty of a target to avoid missing the day's biggest move, so its P&amp;L is lumpier but its winners are larger.</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="strat-card glass">
+        <h4>Swing variant — OBI + drift, longer horizon</h4>
+        <p class="concept">Derived from the same order-book-imbalance and drift framework as the high-frequency work, but held over a longer horizon — letting a confirmed trend run instead of scalping it.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Fewer trades, so <b>cost drag per unit of edge falls</b>, and it holds through intraday noise once drift confirms direction. It is weakest when drift flips quickly or an overnight gap lands against the position. This variant has also worked in practice.</p>
+        <div class="tech-note" data-note style="margin-top:14px; margin-bottom:0;">
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4 style="font-size:13px;">Go deeper</h4></div>
+            <div class="note-toggle" data-show="Show more " data-hide="Hide more ">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner" style="padding-top:2px;">
+            <p style="margin-bottom:10px;">Because it reuses the proven signal framework rather than inventing a new one, the swing version inherits the same causal, no-look-ahead discipline as the faster strategies.</p>
           </div></div>
         </div>
       </div>
@@ -895,6 +975,38 @@ footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); bord
           </div>
           <div class="note-body"><div class="note-inner" style="padding-top:2px;">
             <p style="margin-bottom:0;">The threshold isn't about the strategy's view being wrong — it's about the cost of trading it. Below a certain premium, the bid-ask spread on a deep out-of-the-money option can be a large fraction of the option's entire value, meaning the position would need an outsized favorable move just to cover the cost of entering and exiting, before any edge from the signal itself is realized.</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="strat-card glass">
+        <h4>Volume Run — order-flow engine</h4>
+        <p class="concept">The production order-flow strategy. It measures buy versus sell pressure from the order book across several lookback windows at once, compares a fast read of that flow against a slow one, and requires price to confirm before it commits — trading a small, expiry-adaptive set of ATM and near-OTM options. Position state moves between flat, long and short, with confirmation over consecutive bars on both entry and exit.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Strongest when <b>flow and price push the same way</b> — directional bursts and post-event moves. In flat, low-volume tape it can be whipsawed, which is why the confirmation requirement exists. And because it holds several strikes at once, it carries residual exposure that isn't visible from any single position — the problem the dynamic hedge below is built around.</p>
+        <div class="tech-note" data-note style="margin-top:14px; margin-bottom:0;">
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4 style="font-size:13px;">Go deeper</h4></div>
+            <div class="note-toggle" data-show="Show more " data-hide="Hide more ">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner" style="padding-top:2px;">
+            <p style="margin-bottom:10px;">Multiple windows let it tell a building imbalance from a one-tick flicker. Requiring price confirmation keeps it out of moves where size is resting but nobody is actually pushing the market.</p>
+            <p style="margin-bottom:10px;">Net exposure is not just “add up the quantities”: calls and puts, near-the-money and far strikes, and long and short legs all respond very differently to the same move.</p>
+          </div></div>
+        </div>
+      </div>
+      <div class="strat-card glass">
+        <h4>Dynamic scalping hedge for Volume Run</h4>
+        <p class="concept">A hedge that reacts to what the strategy actually holds, instead of carrying the same protective structure all day. Today a predefined multi-leg options structure (Static V3) is held alongside Volume Run as partial protection — but it is static: it never looks at Volume Run's live book. The research goal is a hedge engine that reads the live exposure — which strikes, calls or puts, long or short, how large — aggregates the delta-, gamma- and vega-style sensitivity of the whole position, decides whether a hedge is warranted at all, and then takes and removes a temporary hedge.</p>
+        <span class="behavior-lbl">Market behavior</span>
+        <p class="behavior">Designed as a <b>hybrid</b>: a slower, minute-level read of state authorizes a hedge, and tick-level timing handles the entry and exit — so the decision doesn't flip on every tick, but execution is still responsive. The risk it has to manage is its own cost: hedging too eagerly just converts protection into spread and churn, so “no hedge” is a first-class outcome.</p>
+        <div class="tech-note" data-note style="margin-top:14px; margin-bottom:0;">
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4 style="font-size:13px;">Go deeper</h4></div>
+            <div class="note-toggle" data-show="Show more " data-hide="Hide more ">Show more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner" style="padding-top:2px;">
+            <p style="margin-bottom:10px;">It is evaluated against four setups on equal footing — Volume Run alone; with the static hedge; with the dynamic hedge; and with both — so the dynamic version has to earn its place on combined P&amp;L and drawdown, not on a flattering chart.</p>
+            <p style="margin-bottom:10px;">The first step is mathematical, not code: define precisely what exposure Volume Run carries and what a hedge should neutralize, <i>before</i> picking any indicator. It is built beside the existing live path, so the working strategy stays untouched.</p>
           </div></div>
         </div>
       </div>
@@ -1005,7 +1117,124 @@ footer{text-align:center; padding:24px; font-size:12px; color:var(--ink-2); bord
 
 <footer>Vishal Mishra — Quantitative Developer &amp; Researcher · Mumbai, India · YouTube: The Algorithmic Forge</footer>
 
+<!-- ============ RESEARCH JOURNEY TAB (right edge) ============ -->
+<button class="journey-tab" onclick="toggleJourney()" aria-label="Open research journey" title="Research journey">
+  <svg class="bulb-glow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>
+  <span>Research journey</span>
+</button>
+<div class="journey-backdrop" onclick="toggleJourney()"></div>
+<aside class="journey-panel" aria-label="Research journey">
+  <div class="jp-head">
+    <div><h3>How the research evolved</h3><p>Each strategy fixes the failure of the one before it</p></div>
+    <button class="jp-close" onclick="toggleJourney()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="jp-body">
+    <p class="jp-lede">Math and physics first, then markets. Every step below started from a specific failure — a stop that didn't survive expiry, a trend system that bled in chop, a volume rule that decayed — and the next strategy was designed to answer exactly that. The engineering that made each step possible is noted in between.</p>
+    <div class="evo-list">
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">01</span>Velocity</h4><p>Intraday trend strategy with volatility-scaled targets</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Originally briefed around protecting an intraday “box” structure. Entries trigger on the force — the momentum strength — of the option or asset being traded, and targets come from the index's ATM implied volatility, so they stretch and shrink with real-time volatility instead of sitting at fixed points.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">The stop-loss. A fixed stop doesn't work on options because behavior changes sharply with days to expiry — a DTE-6 option and a DTE-0/1 option react completely differently to the same move.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Runs on the live state built from the C++ order-book feed; the ATM-IV target comes from the data gateway's synthetic-ATM calculation, so volatility is read in real time rather than from a stale table.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">02</span>DTE-aware stop-loss</h4><p>A stop that adapts to theta risk</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Tightens as expiry approaches and loosens further out, so the stop width matches how violently an option can move for the time it has left.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">Velocity still exited at its IV-based target — and so missed any move that carried beyond the volatility band.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Days-to-expiry is derived from contract metadata at runtime, so the same rule applies consistently across every strike and expiry in the universe.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">03</span>Runner</h4><p>No fixed target, no forced end-of-day exit</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Rides the full move on strong momentum days instead of capping it at the volatility band.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">Choppy, sideways days — where the index stays inside its normal deviation band — are loss-making for both Velocity and Runner. A trend strategy can't fix a day that has no trend.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Because a position can outlive a session, position state is kept in the database as the source of truth, so a restart recovers the exact exposure instead of guessing.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">04</span>Energy</h4><p>Potential-to-kinetic model for range-bound days</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">The choppy-day gap was treated as its own research problem rather than patched into the trend strategies. Inspired by Walter Lewin's lectures on potential and kinetic energy, range-bound price action is modeled as potential energy (distance from equilibrium) converting into kinetic energy (price velocity) — to find turning points and exhaustion inside a range.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">Tested on March 2025, it performed poorly. That window was a market-wide panic-selling regime — a one-directional liquidity shock, not the range-bound chop the model was built for.</p>
+            <span class="evo-lbl">The lesson</span><p class="evo-txt">Separate “the model failed” from “the regime wasn't the one it was designed for.” It's the reason regime detection became a research track of its own.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Evaluated in the parallelized walk-forward backtest suite with realistic costs, so a bad window shows up as a bad window — not as a hidden average.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">05</span>HFT pivot</h4><p>From bar-level strategies to microstructure</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Moved to microstructure strategies on options and futures. First a simple bid-ask spread strategy, then a volume-threshold futures strategy: if traded volume crossed a fixed threshold, trade the side that drove it.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">It worked at first, then started losing money. Rising volume on one side doesn't reliably predict the next price move — the assumption behind it wasn't robust, so the edge decayed.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Tick-level work only became possible because of the C++ order-book engine: full-depth snapshots streamed over Unix sockets and ring buffers with no tick loss.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">06</span>OBI — Order Book Imbalance</h4><p>Replace “is volume rising” with “is price actually being pushed”</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">The arbitrary static threshold is gone. Bid-side and ask-side volume are collected into window-based baskets and turned into an imbalance ratio, which is then amplified when the change in traded price confirms it — flow only counts when price agrees.</p>
+            <span class="evo-lbl">What broke</span><p class="evo-txt">A strong signal, but small moves in last-traded price could swing the ratio between its extremes and trigger excessive trades.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">The baskets are built in the C++ signal builder over several rolling windows, weighted toward the top of the book, and updated in constant time per tick.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">07</span>Drift filter + swing variant</h4><p>Let a trend through only once momentum is established</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">A drift/momentum filter suppresses small chops and releases a signal only once momentum is established — cutting overtrading while keeping the directional edge. From the same OBI + drift framework, a swing-trading version with a longer holding horizon was also derived, and it has worked too.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">The filter is strictly causal — it only ever uses data available at that moment — so what shows up in a backtest is what could have happened live.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">08</span>Equities</h4><p>Same framework, new asset class</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Applying the same physics, math and linear-algebra approach — price as a dynamical system, order-book state as vectors, weighted baskets — to equities.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">The market-data engine already carries F&O and cash-segment streams in one unified snapshot format, so the research moves across without rebuilding the plumbing.</p>
+          </div></div>
+        </div>
+        <div class="tech-note" data-note>
+          <div class="note-head" onclick="toggleNote(this)">
+            <div><h4><span class="evo-num">09</span>Dynamic scalping hedge</h4><p>Hedging what the strategy actually holds</p></div>
+            <div class="note-toggle" data-show="Show details " data-hide="Hide details ">Show details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+          </div>
+          <div class="note-body"><div class="note-inner">
+            <span class="evo-lbl">What it does</span><p class="evo-txt">Replacing an all-day static protective structure with a hedge that reads the live exposure of the order-flow strategy and acts only when it's needed. Full write-up in the High-Frequency section of Research.</p>
+            <span class="evo-lbl">Under the hood</span><p class="evo-hood">Built alongside the existing pipeline rather than inside it — the same feed and signal path, a second consumer — so the live strategy is never put at risk by the experiment.</p>
+          </div></div>
+        </div>
+      </div>
+  </div>
+</aside>
+
 <script>
+  function toggleJourney(){ document.body.classList.toggle('journey-open'); }
+  document.addEventListener('keydown', e => { if(e.key==='Escape') document.body.classList.remove('journey-open'); });
   function toggleNote(headEl){
     const card = headEl.parentElement;
     card.classList.toggle('open');
